@@ -29,7 +29,7 @@
     - Behaviour: Scan: Target
       - Distance to (Target) greater than: Scan Range
       - State Transition: Melee Attack Enemy
-  - State Name: Melee Attach Enemy
+  - State Name: Melee Attack Enemy
     - Behaviour: Movement: Stop
     - Behaviour: Scan: Target
       - Distance to (Target) less than or equal: Melee Range
@@ -37,3 +37,36 @@
     - Behaviour: Scan: Target
       - Distance to (Target) greater than: Melee Range
       - State Transition: Approach Enemy
+
+## Simplified Design Description
+
+### File IO
+
+#### Format
+
+Json? Yaml?
+
+#### Loading
+
+De-serialize
+
+#### Saving
+
+Serialize
+
+### Live data structure
+
+- Entity
+  - Properties
+  - Variables
+  - States
+    - Behaviour
+      - Behaviour Properties
+
+### Front end GUI
+
+#### How live data structure is displayed
+
+#### How Front end is linked to the Live Data
+
+#### Update Data from GUI changes

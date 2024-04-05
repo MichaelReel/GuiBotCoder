@@ -29,6 +29,12 @@ func _ready() -> void:
 	
 	# Add sample variables
 	_add_variable(_variables_gui, "Target")
+	
+	# Add sample states
+	_add_state(_states_gui, "Wander")
+	_add_state(_states_gui, "Approach Enemy")
+	_add_state(_states_gui, "Melee Attack Enemy")
+
 
 func _setup_expected_properties_section(root: TreeItem) -> TreeItem:
 	var properties: TreeItem = create_item(root)
@@ -64,7 +70,13 @@ func _add_variable(variables: TreeItem, variable_name: String) -> void:
 	variable.set_text(0, variable_name)
 
 
+func _add_state(states: TreeItem, state_name: String) -> TreeItem:
+	var state: TreeItem = create_item(states)
+	state.set_text(0, state_name)
+	state.add_button(0, plus_button_texture2d, ADD_ID, false, "Add Behaviour")
+	return state
 	
+
 	#
 	#_generate_sample_rules()
 #
