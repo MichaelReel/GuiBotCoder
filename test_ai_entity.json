@@ -1,0 +1,34 @@
+{
+  "entity_name": "New Entity",
+  "properties": [
+    {
+      "property_name": "Min Movement"
+    },
+    {
+      "property_name": "Max Movement"
+    },
+    {
+      "property_name": "Scan Range"
+    }
+  ],
+  "states": [
+    {
+      "behaviours": [],
+      "state_name": "Wander"
+    },
+    {
+      "behaviours": [],
+      "state_name": "Approach Enemy"
+    },
+    {
+      "behaviours": [],
+      "state_name": "Melee Attack Enemy"
+    }
+  ],
+  "variables": [
+    {
+      "variable_name": "Target"
+    }
+  ],
+  "version": "0.01"
+}

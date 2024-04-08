@@ -34,6 +34,34 @@ func _ready() -> void:
 	_add_state(_states_gui, "Wander")
 	_add_state(_states_gui, "Approach Enemy")
 	_add_state(_states_gui, "Melee Attack Enemy")
+	
+	# TODO: Create the GUI to back the datastructure (rather than the other way around)
+	
+	var entity: AIEntity = AIEntity.new()
+	entity.gui_tree_item = _root
+	for property_gui in _properties_gui.get_children():
+		var property: AIProperty = AIProperty.new()
+		property.gui_tree_item = (property_gui as TreeItem)
+		property.property_name = (property_gui as TreeItem).get_text(0)
+		entity.properties.append(property)
+	
+	for variable_gui in _variables_gui.get_children():
+		var variable: AIVariable = AIVariable.new()
+		variable.gui_tree_item = (variable_gui as TreeItem)
+		variable.variable_name = (variable_gui as TreeItem).get_text(0)
+		entity.variables.append(variable)
+	
+	for state_gui in _states_gui.get_children():
+		var state: AIState = AIState.new()
+		state.gui_tree_item = (state_gui as TreeItem)
+		state.state_name = (state_gui as TreeItem).get_text(0)
+		entity.states.append(state)
+		
+		# No behaviours added yet
+	
+	# Test Save
+	var file_access: AIFileAccess = AIFileAccess.new()
+	file_access.save_file(entity, "test_ai_entity.json")
 
 
 func _setup_expected_properties_section(root: TreeItem) -> TreeItem:
