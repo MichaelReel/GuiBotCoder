@@ -1,9 +1,27 @@
 extends Tree
 
 @export var plus_button_texture2d: Texture2D
+@export var minus_button_texture2d: Texture2D
+@export var modify_button_texture2d: Texture2D
 
-const ADD_ID: int = 1
-const REMOVE_ID: int = 2
+enum EditType {
+	ADD_PROPERTY,
+	ADD_VARIABLE,
+	ADD_STATE,
+	ADD_BEHAVIOUR,
+	REMOVE_PROPERTY,
+	REMOVE_VARIABLE,
+	REMOVE_STATE,
+	REMOVE_BEHAVIOUR,
+	EDIT_BEHAVIOUR,
+}
+
+enum Column {
+	TITLE,
+	ADD_BUTTON,
+	REMOVE_BUTTON,
+	EDIT_BUTTON,
+}
 
 var _root: TreeItem
 
@@ -13,6 +31,14 @@ var _states_gui: TreeItem
 
 
 func _ready() -> void:
+	set_column_expand(Column.TITLE, true)
+	set_column_expand(Column.ADD_BUTTON, false)
+	set_column_expand(Column.REMOVE_BUTTON, false)
+	set_column_expand(Column.EDIT_BUTTON, false)
+	set_column_custom_minimum_width(Column.ADD_BUTTON, plus_button_texture2d.get_width())
+	set_column_custom_minimum_width(Column.REMOVE_BUTTON, minus_button_texture2d.get_width())
+	set_column_custom_minimum_width(Column.EDIT_BUTTON, modify_button_texture2d.get_width())
+	
 	hide_root=true
 	_root = create_item()
 	
@@ -31,9 +57,12 @@ func _ready() -> void:
 	_add_variable(_variables_gui, "Target")
 	
 	# Add sample states
-	_add_state(_states_gui, "Wander")
-	_add_state(_states_gui, "Approach Enemy")
-	_add_state(_states_gui, "Melee Attack Enemy")
+	var wander_state: TreeItem = _add_state(_states_gui, "Wander")
+	var approach_enemy_state: TreeItem = _add_state(_states_gui, "Approach Enemy")
+	var melee_attack_enemy_state: TreeItem = _add_state(_states_gui, "Melee Attack Enemy")
+	
+	# Add sample behaviours
+	var wander_movement_behaviour: TreeItem = _add_movement_relative_behaviour(wander_state, "Any", "Min Movement", "Max Movement")
 	
 	# TODO: Create the GUI to back the datastructure (rather than the other way around)
 	
@@ -66,117 +95,84 @@ func _ready() -> void:
 
 func _setup_expected_properties_section(root: TreeItem) -> TreeItem:
 	var properties: TreeItem = create_item(root)
-	properties.set_text(0, "Entity Properties")
-	properties.add_button(0, plus_button_texture2d, ADD_ID, false, "Add Property")
+	properties.set_text(Column.TITLE, "Entity Properties")
+	properties.add_button(Column.ADD_BUTTON, plus_button_texture2d, EditType.ADD_PROPERTY, false, "Add Property")
 	
 	return properties
 
 
 func _setup_variables_section(root: TreeItem) -> TreeItem:
 	var variables: TreeItem = create_item(root)
-	variables.set_text(0, "State Variables")
-	variables.add_button(0, plus_button_texture2d, ADD_ID, false, "Add Variable")
+	variables.set_text(Column.TITLE, "State Variables")
+	variables.add_button(Column.ADD_BUTTON, plus_button_texture2d, EditType.ADD_VARIABLE, false, "Add Variable")
 	
 	return variables
 
 
 func _setup_states(root: TreeItem) -> TreeItem:
 	var states: TreeItem = create_item(root)
-	states.set_text(0, "States")
-	states.add_button(0, plus_button_texture2d, ADD_ID, false, "Add State")
+	states.set_text(Column.TITLE, "States")
+	states.add_button(Column.ADD_BUTTON, plus_button_texture2d, EditType.ADD_STATE, false, "Add State")
 	
 	return states
 
 
 func _add_property(properties: TreeItem, property_name: String) -> void:
 	var property: TreeItem = create_item(properties)
-	property.set_text(0, property_name)
+	property.set_text(Column.TITLE, property_name)
+	property.add_button(Column.REMOVE_BUTTON, minus_button_texture2d, EditType.REMOVE_PROPERTY, false, "Remove Property")
 
 
 func _add_variable(variables: TreeItem, variable_name: String) -> void:
 	var variable: TreeItem = create_item(variables)
-	variable.set_text(0, variable_name)
+	variable.set_text(Column.TITLE, variable_name)
+	variable.add_button(Column.REMOVE_BUTTON, minus_button_texture2d, EditType.REMOVE_VARIABLE, false, "Remove Variable")
 
 
 func _add_state(states: TreeItem, state_name: String) -> TreeItem:
 	var state: TreeItem = create_item(states)
-	state.set_text(0, state_name)
-	state.add_button(0, plus_button_texture2d, ADD_ID, false, "Add Behaviour")
+	state.set_text(Column.TITLE, state_name)
+	state.add_button(Column.REMOVE_BUTTON, minus_button_texture2d, EditType.REMOVE_STATE, false, "Remove State")
+	state.add_button(Column.ADD_BUTTON, plus_button_texture2d, EditType.ADD_BEHAVIOUR, false, "Add Behaviour")
 	return state
-	
 
-	#
-	#_generate_sample_rules()
-#
-#
-#func _generate_sample_rules() -> void:
-	#"""Spiking out how the interface could look"""
-	#_states = create_item()
-	#_states.set_text(0, "States")
-	#_states.add_button(0, plus_button_texture2d, ADD_ID, false, "Add State")
-	#
-	#_generate_wander_state(_states)
-	#_generate_approach_entity_state(_states)
-#
-#func _generate_wander_state(states: TreeItem) -> void:
-	#var wander_state: TreeItem = create_item(states)
-	#wander_state.set_text(0, "State Name: Wander")
-	#
-	#_generate_random_move_behaviour(wander_state)
-	#_generate_enemy_scan_behaviour(wander_state)
-#
-#func _generate_random_move_behaviour(state: TreeItem) -> void:
-	#var move: TreeItem = create_item(state)
-	#move.set_text(0, "Movement Behaviour: Relative")
-	#var direction: TreeItem = create_item(move)
-	#var distance: TreeItem = create_item(move)
-	#direction.set_text(0, "Direction: Any")
-	#distance.set_text(0, "Distance: Any")
-#
-#
-#func _generate_enemy_scan_behaviour(state: TreeItem) -> void:
-	#var scan_behaviour: TreeItem = create_item(state)
-	#scan_behaviour.set_text(0, "Scan Behaviour for Any: Entity")
-	#_add_scan_modifier("Entity Type", "Enemy", scan_behaviour)
-	#_add_scan_modifier("Entity Level less than", "5", scan_behaviour)
-	#var result_state: TreeItem = create_item(scan_behaviour)
-	#result_state.set_text(0, "State Transistion: Approach Enemy (Entity)")
-#
-#
-#func _generate_approach_entity_state(states: TreeItem) -> void:
-	#var approach_state: TreeItem = create_item(states)
-	#approach_state.set_text(0, "State Name: Approach Enemy (Entity)")
-	#
-	#_generate_target_move_behaviour(approach_state)
-	#_generate_enemy_approach_scan_behaviour(approach_state)
-#
-#
-#func _generate_target_move_behaviour(state: TreeItem) -> void:
-	#var move: TreeItem = create_item(state)
-	#move.set_text(0, "Movement Behaviour: Targeted")
-	#var direction: TreeItem = create_item(move)
-	#direction.set_text(0, "Direction: Entity")
-#
-#
-#func _generate_enemy_approach_scan_behaviour(state: TreeItem) -> void:
-	#var scan_behaviour: TreeItem = create_item(state)
-	#scan_behaviour.set_text(0, "Scan Behaviour: Entity")
-	#_add_scan_modifier("Distance to (Entity) less than", "Melee Range", scan_behaviour)
-	#var result_state: TreeItem = create_item(scan_behaviour)
-	#result_state.set_text(0, "State Transistion: Approach (Entity)")
-#
-#
-#func _add_scan_modifier(mod_name: String, mod_value: String, scan: TreeItem) -> void:
-	#var scan_mod: TreeItem = create_item(scan)
-	#scan_mod.set_text(0, mod_name + ": " + mod_value)
+
+func _add_movement_relative_behaviour(state: TreeItem, direction: String, min_property: String, max_property: String) -> TreeItem:
+	var behaviour: TreeItem = create_item(state)
+	behaviour.set_text(Column.TITLE, "Behaviour: Movement: Relative")
+	behaviour.add_button(Column.REMOVE_BUTTON, minus_button_texture2d, EditType.REMOVE_BEHAVIOUR, false, "Remove Behaviour")
+	behaviour.add_button(Column.EDIT_BUTTON, modify_button_texture2d, EditType.EDIT_BEHAVIOUR, false, "Edit Behaviour")
+	
+	
+	var direction_argument: TreeItem = create_item(behaviour)
+	direction_argument.set_text(Column.TITLE, "Direction: " + direction)
+	var distance_argument: TreeItem = create_item(behaviour)
+	distance_argument.set_text(Column.TITLE, "Distance: Range(" + min_property + " to " + max_property + ")")
+	
+	return behaviour
 
 
 func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_index: int) -> void:
-	if id == ADD_ID:
-		match item:
-			_properties_gui:
-				print("add property")
-			_variables_gui:
-				print("add variable")
-			_states_gui:
-				print("add state")
+	match id:
+		EditType.ADD_PROPERTY:
+			print("add property")
+		EditType.ADD_VARIABLE:
+			print("add variable")
+		EditType.ADD_STATE:
+			print("add state")
+		EditType.ADD_BEHAVIOUR:
+			print("add behaviour")
+		EditType.REMOVE_PROPERTY:
+			print("remove property")
+		EditType.REMOVE_VARIABLE:
+			print("remove variable")
+		EditType.REMOVE_STATE:
+			print("remove state")
+		EditType.REMOVE_BEHAVIOUR:
+			print("remove behaviour")
+		EditType.EDIT_BEHAVIOUR:
+			print("edit behaviour")
+
+
+func _get_random_direction() -> Vector2:
+	return Vector2.from_angle(randf_range(0, PI * 2.0))
