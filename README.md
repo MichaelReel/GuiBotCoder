@@ -28,15 +28,14 @@
       - State Transition: Melee Attack Enemy
     - Behaviour: Scan: Target
       - Distance to (Target) greater than: Scan Range
-      - State Transition: Melee Attack Enemy
+      - State Transition: Wander
   - State Name: Melee Attack Enemy
     - Behaviour: Movement: Stop
     - Behaviour: Scan: Target
-      - Distance to (Target) less than or equal: Melee Range
-      - Action: Attack (Target)
-    - Behaviour: Scan: Target
       - Distance to (Target) greater than: Melee Range
       - State Transition: Approach Enemy
+    - Behaviour: Attack Entity
+      - Entity: (Target)
 
 ## Simplified Design Description
 
@@ -60,8 +59,14 @@ Serialize
   - Properties
   - Variables
   - States
-    - Behaviour
-      - Behaviour Properties
+    - Incumbent Behaviour
+      - Movement
+    - Conditional Behaviour
+      - Behaviour Conditions
+        - Condition Properties
+      - Behaviour Actions
+        - Variable Assignment
+        - State Transistion
 
 ### Front end GUI
 

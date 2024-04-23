@@ -9,6 +9,9 @@
     },
     {
       "property_name": "Scan Range"
+    },
+    {
+      "property_name": "Melee Range"
     }
   ],
   "states": [

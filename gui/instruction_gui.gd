@@ -52,6 +52,7 @@ func _ready() -> void:
 	_add_property(_properties_gui, "Min Movement")
 	_add_property(_properties_gui, "Max Movement")
 	_add_property(_properties_gui, "Scan Range")
+	_add_property(_properties_gui, "Melee Range")
 	
 	# Add sample variables
 	_add_variable(_variables_gui, "Target")
@@ -62,7 +63,16 @@ func _ready() -> void:
 	var melee_attack_enemy_state: TreeItem = _add_state(_states_gui, "Melee Attack Enemy")
 	
 	# Add sample behaviours
-	var wander_movement_behaviour: TreeItem = _add_movement_relative_behaviour(wander_state, "Any", "Min Movement", "Max Movement")
+	var _wander_movement_behaviour: TreeItem = _add_movement_relative_behaviour(wander_state, "Any", "Min Movement", "Max Movement")
+	var _wander_scan_behaviour: TreeItem = _add_scanning_area_le_level_behaviour(wander_state, "Scan Range", "Enemy", 5, "Target", "Approach Enemy")
+	
+	var _approach_movement_behaviour: TreeItem = _add_movement_to_entity_behaviour(approach_enemy_state, "Target", "Max Movement")
+	var _approach_scan_le_behavour: TreeItem = _add_scanning_entity_distance_le_behaviour(approach_enemy_state, "Target", "Melee Range", "Melee Attack Enemy")
+	var _approach_scan_gt_behavour: TreeItem = _add_scanning_entity_distance_gt_behaviour(approach_enemy_state, "Target", "Scan Range", "Wander")
+	
+	var _melee_movement_behaviour: TreeItem = _add_movement_stop_behaviour(melee_attack_enemy_state)
+	var _melee_scan_gt_behaviour: TreeItem = _add_scanning_entity_distance_gt_behaviour(melee_attack_enemy_state, "Target", "Melee Range", "Approach Enemy")
+	var _melee_attack_behaviour: TreeItem = _add_entity_melee_attack_behaviour(melee_attack_enemy_state, "Target")
 	
 	# TODO: Create the GUI to back the datastructure (rather than the other way around)
 	
@@ -143,16 +153,105 @@ func _add_movement_relative_behaviour(state: TreeItem, direction: String, min_pr
 	behaviour.add_button(Column.REMOVE_BUTTON, minus_button_texture2d, EditType.REMOVE_BEHAVIOUR, false, "Remove Behaviour")
 	behaviour.add_button(Column.EDIT_BUTTON, modify_button_texture2d, EditType.EDIT_BEHAVIOUR, false, "Edit Behaviour")
 	
-	
 	var direction_argument: TreeItem = create_item(behaviour)
 	direction_argument.set_text(Column.TITLE, "Direction: " + direction)
-	var distance_argument: TreeItem = create_item(behaviour)
-	distance_argument.set_text(Column.TITLE, "Distance: Range(" + min_property + " to " + max_property + ")")
+	var distance_range_argument: TreeItem = create_item(behaviour)
+	distance_range_argument.set_text(Column.TITLE, "Distance: Range(" + min_property + " to " + max_property + ")")
 	
 	return behaviour
 
 
-func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_index: int) -> void:
+func _add_scanning_area_le_level_behaviour(
+	state: TreeItem,
+	radius_property: String,
+	entity_type: String,
+	less_or_equal_level: int,
+	assign_variable: String,
+	next_state: String
+) -> TreeItem:
+	var behaviour: TreeItem = create_item(state)
+	behaviour.set_text(Column.TITLE, "Behaviour: Scan for Any")
+	behaviour.add_button(Column.REMOVE_BUTTON, minus_button_texture2d, EditType.REMOVE_BEHAVIOUR, false, "Remove Behaviour")
+	behaviour.add_button(Column.EDIT_BUTTON, modify_button_texture2d, EditType.EDIT_BEHAVIOUR, false, "Edit Behaviour")
+	
+	var radius_property_argument: TreeItem = create_item(behaviour)
+	radius_property_argument.set_text(Column.TITLE, "Radius: " + radius_property)
+	var entity_type_argument: TreeItem = create_item(behaviour)
+	entity_type_argument.set_text(Column.TITLE, "Entity Type: " + entity_type)
+	var entity_le_level_argument: TreeItem = create_item(behaviour)
+	entity_le_level_argument.set_text(Column.TITLE, "Entity Level less than or equal to: " + str(less_or_equal_level))
+	var assign_to_variable_argument: TreeItem = create_item(behaviour)
+	assign_to_variable_argument.set_text(Column.TITLE, "Assign to: " + assign_variable)
+	var state_transition_argument: TreeItem = create_item(behaviour)
+	state_transition_argument.set_text(Column.TITLE, "State Transition: " + next_state)
+	
+	return behaviour
+
+
+func _add_movement_to_entity_behaviour(state: TreeItem, entity_variable: String, velocity_property: String) -> TreeItem:
+	var behaviour: TreeItem = create_item(state)
+	behaviour.set_text(Column.TITLE, "Behaviour: Movement to Entity")
+	behaviour.add_button(Column.REMOVE_BUTTON, minus_button_texture2d, EditType.REMOVE_BEHAVIOUR, false, "Remove Behaviour")
+	behaviour.add_button(Column.EDIT_BUTTON, modify_button_texture2d, EditType.EDIT_BEHAVIOUR, false, "Edit Behaviour")
+	
+	var entity_variable_argument: TreeItem = create_item(behaviour)
+	entity_variable_argument.set_text(Column.TITLE, "Entity: " + entity_variable)
+	var velocity_property_argument: TreeItem = create_item(behaviour)
+	velocity_property_argument.set_text(Column.TITLE, "Velocity: " + velocity_property)
+	
+	return behaviour
+
+
+func _add_scanning_entity_distance_le_behaviour(state: TreeItem, entity_variable: String, range_property: String, next_state: String) -> TreeItem:
+	var behaviour: TreeItem = create_item(state)
+	behaviour.set_text(Column.TITLE, "Behaviour: Scan for Entity")
+	behaviour.add_button(Column.REMOVE_BUTTON, minus_button_texture2d, EditType.REMOVE_BEHAVIOUR, false, "Remove Behaviour")
+	behaviour.add_button(Column.EDIT_BUTTON, modify_button_texture2d, EditType.EDIT_BEHAVIOUR, false, "Edit Behaviour")
+	
+	var entity_variable_argument: TreeItem = create_item(behaviour)
+	entity_variable_argument.set_text(Column.TITLE, "Entity: " + entity_variable)
+	var range_property_argument: TreeItem = create_item(behaviour)
+	range_property_argument.set_text(Column.TITLE, "Distance to Entity less than or equal to: " + range_property)
+	var state_transition_argument: TreeItem = create_item(behaviour)
+	state_transition_argument.set_text(Column.TITLE, "State Transition: " + next_state)
+	
+	return behaviour
+
+func _add_scanning_entity_distance_gt_behaviour(state: TreeItem, entity_variable: String, range_property: String, next_state: String) -> TreeItem:
+	var behaviour: TreeItem = create_item(state)
+	behaviour.set_text(Column.TITLE, "Behaviour: Scan for Entity")
+	behaviour.add_button(Column.REMOVE_BUTTON, minus_button_texture2d, EditType.REMOVE_BEHAVIOUR, false, "Remove Behaviour")
+	behaviour.add_button(Column.EDIT_BUTTON, modify_button_texture2d, EditType.EDIT_BEHAVIOUR, false, "Edit Behaviour")
+	
+	var entity_variable_argument: TreeItem = create_item(behaviour)
+	entity_variable_argument.set_text(Column.TITLE, "Entity: " + entity_variable)
+	var range_property_argument: TreeItem = create_item(behaviour)
+	range_property_argument.set_text(Column.TITLE, "Distance to Entity greater than: " + range_property)
+	var state_transition_argument: TreeItem = create_item(behaviour)
+	state_transition_argument.set_text(Column.TITLE, "State Transition: " + next_state)
+	
+	return behaviour
+
+func _add_movement_stop_behaviour(state: TreeItem) -> TreeItem:
+	var behaviour: TreeItem = create_item(state)
+	behaviour.set_text(Column.TITLE, "Behaviour: Movement: Stop")
+	behaviour.add_button(Column.REMOVE_BUTTON, minus_button_texture2d, EditType.REMOVE_BEHAVIOUR, false, "Remove Behaviour")
+	
+	return behaviour
+
+func _add_entity_melee_attack_behaviour(state: TreeItem, entity_variable: String) -> TreeItem:
+	var behaviour: TreeItem = create_item(state)
+	behaviour.set_text(Column.TITLE, "Behaviour: Attack Entity")
+	behaviour.add_button(Column.REMOVE_BUTTON, minus_button_texture2d, EditType.REMOVE_BEHAVIOUR, false, "Remove Behaviour")
+	behaviour.add_button(Column.EDIT_BUTTON, modify_button_texture2d, EditType.EDIT_BEHAVIOUR, false, "Edit Behaviour")
+	
+	var entity_variable_argument: TreeItem = create_item(behaviour)
+	entity_variable_argument.set_text(Column.TITLE, "Entity: " + entity_variable)
+	
+	return behaviour
+
+
+func _on_button_clicked(_item: TreeItem, _column: int, id: int, _mouse_button_index: int) -> void:
 	match id:
 		EditType.ADD_PROPERTY:
 			print("add property")

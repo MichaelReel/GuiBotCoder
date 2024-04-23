@@ -16,7 +16,7 @@ func serialize_entity(entity: AIEntity) -> String:
 	var entity_as_dict: Dictionary = schemas.AIEntitySchema.to_dict(entity)
 	return JSON.stringify(entity_as_dict, "  ")
 
-func deserialize_entity(json: String) -> AIEntity:
+func deserialize_entity(_json: String) -> AIEntity:
 	return AIEntity.new()
 
 
