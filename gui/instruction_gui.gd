@@ -81,22 +81,27 @@ func _ready() -> void:
 	for property_gui in _properties_gui.get_children():
 		var property: AIProperty = AIProperty.new()
 		property.gui_tree_item = (property_gui as TreeItem)
-		property.property_name = (property_gui as TreeItem).get_text(0)
+		property.property_name = property.gui_tree_item.get_text(0)
 		entity.properties.append(property)
 	
 	for variable_gui in _variables_gui.get_children():
 		var variable: AIVariable = AIVariable.new()
 		variable.gui_tree_item = (variable_gui as TreeItem)
-		variable.variable_name = (variable_gui as TreeItem).get_text(0)
+		variable.variable_name = variable.gui_tree_item.get_text(0)
 		entity.variables.append(variable)
 	
 	for state_gui in _states_gui.get_children():
 		var state: AIState = AIState.new()
 		state.gui_tree_item = (state_gui as TreeItem)
-		state.state_name = (state_gui as TreeItem).get_text(0)
+		state.state_name = state.gui_tree_item.get_text(0)
 		entity.states.append(state)
 		
 		# No behaviours added yet
+		for behaviour_gui in state_gui.get_children():
+			var behaviour: AIBehaviour = AIBehaviour.new()
+			behaviour.gui_tree_item = (behaviour_gui as TreeItem)
+			behaviour.behaviour_name = behaviour.gui_tree_item.get_text(0)
+			state.behaviours.append(behaviour)
 	
 	# Test Save
 	var file_access: AIFileAccess = AIFileAccess.new()
@@ -145,6 +150,13 @@ func _add_state(states: TreeItem, state_name: String) -> TreeItem:
 	state.add_button(Column.REMOVE_BUTTON, minus_button_texture2d, EditType.REMOVE_STATE, false, "Remove State")
 	state.add_button(Column.ADD_BUTTON, plus_button_texture2d, EditType.ADD_BEHAVIOUR, false, "Add Behaviour")
 	return state
+
+
+# Behaviours should have:
+	# Variable Assigns - Store some primitive or pointer to a node
+	# State actions - Things that happen while we're in the current state
+	# State changes - Changes to state
+	#     with conditions - Rules that need to be met to enact a state change
 
 
 func _add_movement_relative_behaviour(state: TreeItem, direction: String, min_property: String, max_property: String) -> TreeItem:
@@ -217,6 +229,7 @@ func _add_scanning_entity_distance_le_behaviour(state: TreeItem, entity_variable
 	
 	return behaviour
 
+
 func _add_scanning_entity_distance_gt_behaviour(state: TreeItem, entity_variable: String, range_property: String, next_state: String) -> TreeItem:
 	var behaviour: TreeItem = create_item(state)
 	behaviour.set_text(Column.TITLE, "Behaviour: Scan for Entity")
@@ -232,12 +245,14 @@ func _add_scanning_entity_distance_gt_behaviour(state: TreeItem, entity_variable
 	
 	return behaviour
 
+
 func _add_movement_stop_behaviour(state: TreeItem) -> TreeItem:
 	var behaviour: TreeItem = create_item(state)
 	behaviour.set_text(Column.TITLE, "Behaviour: Movement: Stop")
 	behaviour.add_button(Column.REMOVE_BUTTON, minus_button_texture2d, EditType.REMOVE_BEHAVIOUR, false, "Remove Behaviour")
 	
 	return behaviour
+
 
 func _add_entity_melee_attack_behaviour(state: TreeItem, entity_variable: String) -> TreeItem:
 	var behaviour: TreeItem = create_item(state)

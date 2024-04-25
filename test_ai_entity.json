@@ -16,15 +16,42 @@
   ],
   "states": [
     {
-      "behaviours": [],
+      "behaviours": [
+        {
+          "behaviour_name": "Behaviour: Movement: Relative"
+        },
+        {
+          "behaviour_name": "Behaviour: Scan for Any"
+        }
+      ],
       "state_name": "Wander"
     },
     {
-      "behaviours": [],
+      "behaviours": [
+        {
+          "behaviour_name": "Behaviour: Movement to Entity"
+        },
+        {
+          "behaviour_name": "Behaviour: Scan for Entity"
+        },
+        {
+          "behaviour_name": "Behaviour: Scan for Entity"
+        }
+      ],
       "state_name": "Approach Enemy"
     },
     {
-      "behaviours": [],
+      "behaviours": [
+        {
+          "behaviour_name": "Behaviour: Movement: Stop"
+        },
+        {
+          "behaviour_name": "Behaviour: Scan for Entity"
+        },
+        {
+          "behaviour_name": "Behaviour: Attack Entity"
+        }
+      ],
       "state_name": "Melee Attack Enemy"
     }
   ],
