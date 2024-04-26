@@ -1,6 +1,8 @@
 class_name AIState
-extends Node
+extends Object
 
 var state_name: String
 var gui_tree_item: TreeItem
-var behaviours: Array[AIBehaviour]
+
+var actions: Array[AIAction]
+var transistions: Array[AITransition]

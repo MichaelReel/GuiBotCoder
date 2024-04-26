@@ -96,12 +96,12 @@ func _ready() -> void:
 		state.state_name = state.gui_tree_item.get_text(0)
 		entity.states.append(state)
 		
-		# No behaviours added yet
-		for behaviour_gui in state_gui.get_children():
-			var behaviour: AIBehaviour = AIBehaviour.new()
-			behaviour.gui_tree_item = (behaviour_gui as TreeItem)
-			behaviour.behaviour_name = behaviour.gui_tree_item.get_text(0)
-			state.behaviours.append(behaviour)
+		## No behaviours added yet
+		#for behaviour_gui in state_gui.get_children():
+			#var behaviour: AIBehaviour = AIBehaviour.new()
+			#behaviour.gui_tree_item = (behaviour_gui as TreeItem)
+			#behaviour.behaviour_name = behaviour.gui_tree_item.get_text(0)
+			#state.behaviours.append(behaviour)
 	
 	# Test Save
 	var file_access: AIFileAccess = AIFileAccess.new()

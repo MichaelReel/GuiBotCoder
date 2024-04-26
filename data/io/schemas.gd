@@ -7,7 +7,7 @@ var AIEntitySchema: EntitySchema = EntitySchema.new(self)
 var AIPropertySchema: PropertySchema = PropertySchema.new(self)
 var AIVariableSchema: VariablesSchema = VariablesSchema.new(self)
 var AIStateSchema: StateSchema = StateSchema.new(self)
-var AIBehaviourSchema: BehaviourSchema = BehaviourSchema.new(self)
+#var AIBehaviourSchema: BehaviourSchema = BehaviourSchema.new(self)
 
 
 class SchemaBase extends RefCounted:
@@ -46,13 +46,13 @@ class StateSchema extends SchemaBase:
 	func to_dict(state: AIState) -> Dictionary:
 		return {
 			"state_name": state.state_name,
-			"behaviours": state.behaviours.map(_schemas.AIBehaviourSchema.to_dict)
+			#"behaviours": state.behaviours.map(_schemas.AIBehaviourSchema.to_dict)
 		}
 
 
-class BehaviourSchema extends SchemaBase:
-	func to_dict(behaviour: AIBehaviour) -> Dictionary:
-		return {
-			"behaviour_name": behaviour.behaviour_name
-			# TODO: This is likely to get complex
-		}
+#class BehaviourSchema extends SchemaBase:
+	#func to_dict(behaviour: AIBehaviour) -> Dictionary:
+		#return {
+			#"behaviour_name": behaviour.behaviour_name
+			## TODO: This is likely to get complex
+		#}
