@@ -11,43 +11,46 @@
   - `Target`
 - States
   - State Name `Wander`
-    - State Actions:
+    - State Actions
       - Assign `Direction` = any_vector()
       - Assign `Distance` = rand_range(`Min Movement`, `Max Movement`)
       - Assign `Target` = nearest_entity_in_group("Enemy")
       - Assign `Target Range` = distance_to(`Target`)
       - Assign `Target Level` = level_of(`Target`)
       - Travel(`Direction`, `Distance`)
-    - State Transition `Approach Enemy`
-      - Conditional Greater Than or Equal
-        - `Max Enemy Level`
-        - `Target Level`
-      - Conditional Greater Than
-        - `Scan Range`
-        - `Target Range`
+    - State Transitions
+      - State Transition `Approach Enemy`
+        - Conditional greater_or_equal
+          - `Max Enemy Level`
+          - `Target Level`
+        - Conditional greater_than
+          - `Scan Range`
+          - `Target Range`
   - State Name `Approach Enemy`
     - State Actions
       - Assign `Direction` = vector_to(`Target`)
       - Assign `Target Range` = distance_to(`Target`)
       - Assign `Distance` = min(`Max Movement`, `Target Range`)
       - Travel(`Direction`, `Distance`)
-    - State Transition `Melee Attack Enemy`
-      - Condition Greater Than or Equal
-        - `Melee Range`
-        - `Target Range`
-    - State Transition `Wander`
-      - Condition Greater Than or Equal
-        - `Target Range`
-        - `Scan Range`
+    - State Transitions
+      - State Transition `Melee Attack Enemy`
+        - Condition greater_or_equal
+          - `Melee Range`
+          - `Target Range`
+      - State Transition `Wander`
+        - Condition greater_or_equal
+          - `Target Range`
+          - `Scan Range`
   - State Name `Melee Attack Enemy`
     - State Actions
       - Assign `Target Range` = distance_to(`Target`)
       - Stop()
       - Melee Attack(`Target`)
-    - State Transition `Approach Enemy`
-      - Condition Greater Than
-        - `Target Range`
-        - `Melee Range`
+    - State Transitions
+      - State Transition `Approach Enemy`
+        - Condition greater_than
+          - `Target Range`
+          - `Melee Range`
 
 
 ## Simplified Design Description

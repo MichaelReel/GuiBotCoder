@@ -14,6 +14,11 @@ config/name="GuiCoder"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Column="*res://gui/column.gd"
+EditType="*res://gui/edit_type.gd"
+
 [display]
 
 window/size/viewport_width=1280

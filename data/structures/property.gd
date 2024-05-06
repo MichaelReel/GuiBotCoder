@@ -2,4 +2,6 @@ class_name AIProperty
 extends Object
 
 var property_name: String
-var gui_tree_item: TreeItem
+
+func _init(name: String) -> void:
+	property_name = name

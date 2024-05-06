@@ -2,4 +2,6 @@ class_name AIVariable
 extends Object
 
 var variable_name: String
-var gui_tree_item: TreeItem
+
+func _init(name: String) -> void:
+	variable_name = name
