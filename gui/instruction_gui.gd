@@ -7,11 +7,6 @@ extends Tree
 
 var root: EntityGui
 
-var _properties_gui: TreeItem
-var _variables_gui: TreeItem
-var _states_gui: TreeItem
-
-
 func _ready() -> void:
 	set_column_expand(Column.TITLE, true)
 	set_column_expand(Column.ADD_BUTTON, false)
