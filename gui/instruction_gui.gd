@@ -75,7 +75,7 @@ func _ready() -> void:
 	root = EntityGui.new(self, entity)
 
 func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_index: int) -> void:
-	print(EditType.DESCRIPTION[id] + " to " + str(item))
+	print(EditType.DESCRIPTION[id] + " -> " + str(item))
 
 func _get_random_direction() -> Vector2:
 	return Vector2.from_angle(randf_range(0, PI * 2.0))
