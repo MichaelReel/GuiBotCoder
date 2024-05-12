@@ -20,12 +20,8 @@
       - Travel(`Direction`, `Distance`)
     - State Transitions
       - State Transition `Approach Enemy`
-        - Conditional greater_or_equal
-          - `Max Enemy Level`
-          - `Target Level`
-        - Conditional greater_than
-          - `Scan Range`
-          - `Target Range`
+        - Conditional greater_or_equal(`Max Enemy Level`, `Target Level`)
+        - Conditional greater_than(`Scan Range`, `Target Range`)
   - State Name `Approach Enemy`
     - State Actions
       - Assign `Direction` = vector_to(`Target`)
@@ -34,13 +30,9 @@
       - Travel(`Direction`, `Distance`)
     - State Transitions
       - State Transition `Melee Attack Enemy`
-        - Condition greater_or_equal
-          - `Melee Range`
-          - `Target Range`
+        - Condition greater_or_equal(`Melee Range`, `Target Range`)
       - State Transition `Wander`
-        - Condition greater_or_equal
-          - `Target Range`
-          - `Scan Range`
+        - Condition greater_or_equal(`Target Range`, `Scan Range`)
   - State Name `Melee Attack Enemy`
     - State Actions
       - Assign `Target Range` = distance_to(`Target`)
@@ -48,10 +40,7 @@
       - Melee Attack(`Target`)
     - State Transitions
       - State Transition `Approach Enemy`
-        - Condition greater_than
-          - `Target Range`
-          - `Melee Range`
-
+        - Condition greater_than(`Target Range`, `Melee Range`)
 
 ## Simplified Design Description
 

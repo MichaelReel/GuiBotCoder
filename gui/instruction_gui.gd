@@ -73,6 +73,10 @@ func _ready() -> void:
 	
 	hide_root=true
 	root = EntityGui.new(self, entity)
+	
+	# Test Save
+	var file_access: AIFileAccess = AIFileAccess.new()
+	file_access.save_file(entity, "test_ai_entity.json")
 
 func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_index: int) -> void:
 	print(EditType.DESCRIPTION[id] + " -> " + str(item))

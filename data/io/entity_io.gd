@@ -17,6 +17,6 @@ func serialize_entity(entity: AIEntity) -> String:
 	return JSON.stringify(entity_as_dict, "  ")
 
 func deserialize_entity(_json: String) -> AIEntity:
-	return AIEntity.new()
+	return AIEntity.new("Unread Entity")
 
 
