@@ -48,7 +48,208 @@
 
 #### Format
 
-Json? Yaml?
+Files will be saved in JSON, would prefer Yaml but JSON is already supported in Godot.
+
+Sample Json:
+
+```json
+{
+  "version": "0.01",
+  "entity_name": "Sample Data Entity",
+  "variables": [
+    {
+      "variable_name": "Target"
+    }
+  ],
+  "properties": [
+    {
+      "property_name": "Min Movement"
+    },
+    {
+      "property_name": "Max Movement"
+    },
+    {
+      "property_name": "Scan Range"
+    },
+    {
+      "property_name": "Melee Range"
+    },
+    {
+      "property_name": "Target Group"
+    }
+  ],
+  "states": [
+    {
+      "state_name": "Wander",
+      "actions": [
+        {
+          "action_type": "assignment",
+          "assign_variable_name": "Direction",
+          "function_name": "any_vector",
+          "function_argument_names": []
+        },
+        {
+          "action_type": "assignment",
+          "assign_variable_name": "Distance",
+          "function_name": "rand_range",
+          "function_argument_names": [
+            "Min Movement",
+            "Max Movement"
+          ]
+        },
+        {
+          "action_type": "assignment",
+          "assign_variable_name": "Target",
+          "function_name": "nearest_entity_in_group",
+          "function_argument_names": [
+            "Target Group"
+          ]
+        },
+        {
+          "action_type": "assignment",
+          "assign_variable_name": "Target Range",
+          "function_name": "distance_to",
+          "function_argument_names": [
+            "Target"
+          ]
+        },
+        {
+          "action_type": "assignment",
+          "assign_variable_name": "Target Level",
+          "function_name": "level_of",
+          "function_argument_names": [
+            "Target"
+          ]
+        },
+        {
+          "action_type": "travel",
+          "direction_variable_name": "Direction",
+          "distance_variable_name": "Distance"
+        }
+      ],
+      "transitions": [
+        {
+          "target_state_name": "Approach Enemy",
+          "conditionals": [
+            {
+              "condition_function_name": "greater_or_equal",
+              "condition_argument_names": [
+                "Max Enemy Level",
+                "Target Level"
+              ]
+            },
+            {
+              "condition_function_name": "greater_than",
+              "condition_argument_names": [
+                "Scan Range",
+                "Target Range"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "state_name": "Approach Enemy",
+      "actions": [
+        {
+          "action_type": "assignment",
+          "assign_variable_name": "Direction",
+          "function_name": "vector_to",
+          "function_argument_names": [
+            "Target"
+          ]
+        },
+        {
+          "action_type": "assignment",
+          "assign_variable_name": "Target Range",
+          "function_name": "distance_to",
+          "function_argument_names": [
+            "Target"
+          ]
+        },
+        {
+          "action_type": "assignment",
+          "assign_variable_name": "Distance",
+          "function_name": "min",
+          "function_argument_names": [
+            "Max Movement",
+            "Target Range"
+          ]
+        },
+        {
+          "action_type": "travel",
+          "direction_variable_name": "Direction",
+          "distance_variable_name": "Distance"
+        }
+      ],
+      "transitions": [
+        {
+          "target_state_name": "Melee Attack Enemy",
+          "conditionals": [
+            {
+              "condition_function_name": "greater_or_equal",
+              "condition_argument_names": [
+                "Melee Range",
+                "Target Range"
+              ]
+            }
+          ]
+        },
+        {
+          "target_state_name": "Wander",
+          "conditionals": [
+            {
+              "condition_function_name": "greater_or_equal",
+              "condition_argument_names": [
+                "Target Range",
+                "Scan Range"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "state_name": "Melee Attack Enemy",
+      "actions": [
+        {
+          "action_type": "assignment",
+          "assign_variable_name": "Target Range",
+          "function_name": "distance_to",
+          "function_argument_names": [
+            "Target"
+          ]
+        },
+        {
+          "action_type": "stop"
+        },
+        {
+          "action_type": "perform",
+          "function_name": "melee_attack",
+          "function_argument_names": [
+            "Target"
+          ]
+        }
+      ],
+      "transitions": [
+        {
+          "target_state_name": "Approach Enemy",
+          "conditionals": [
+            {
+              "condition_function_name": "greater_than",
+              "condition_argument_names": [
+                "Target Range",
+                "Melee Range"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
 
 #### Loading
 
@@ -64,14 +265,15 @@ Serialize
   - Properties
   - Variables
   - States
-    - Incumbent Behaviour
-      - Movement
-    - Conditional Behaviour
-      - Behaviour Conditions
-        - Condition Properties
-      - Behaviour Actions
-        - Variable Assignment
+    - State
+      - Action
+        - Setting Local Variables
+        - Setting Machine Variables
+        - Movement
+        - Attacks
+      - State Transitions
         - State Transition
+          - Condition For Change
 
 ### Front end GUI
 

@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://11rbq5xwc1uy"]
 
 [ext_resource type="Script" path="res://gui/instruction_gui.gd" id="1_1bwlm"]
-[ext_resource type="Texture2D" uid="uid://bj12mnpcvqk81" path="res://assets/buttons/add_button.png" id="2_5jap7"]
-[ext_resource type="Texture2D" uid="uid://biof6uhprfjaq" path="res://assets/buttons/remove_button.png" id="3_hs52q"]
-[ext_resource type="Texture2D" uid="uid://cw2c18xc01hsk" path="res://assets/buttons/edit_button.png" id="4_gngc2"]
+[ext_resource type="Texture2D" uid="uid://6tq41m622hrr" path="res://assets/buttons/Add.svg" id="2_bxein"]
+[ext_resource type="Texture2D" uid="uid://beoii7vqtt18j" path="res://assets/buttons/Remove.svg" id="3_ujpyy"]
+[ext_resource type="Texture2D" uid="uid://cl7k8ytumsj67" path="res://assets/buttons/Edit.svg" id="4_ys0e5"]
 
 [node name="Control" type="MarginContainer"]
 anchors_preset = 15
@@ -35,8 +35,8 @@ size_flags_vertical = 3
 layout_mode = 2
 columns = 4
 script = ExtResource("1_1bwlm")
-plus_button_texture2d = ExtResource("2_5jap7")
-minus_button_texture2d = ExtResource("3_hs52q")
-modify_button_texture2d = ExtResource("4_gngc2")
+plus_button_texture2d = ExtResource("2_bxein")
+minus_button_texture2d = ExtResource("3_ujpyy")
+modify_button_texture2d = ExtResource("4_ys0e5")
 
 [connection signal="button_clicked" from="HBoxContainer/LeftScrollContainer/CodePanel/Tree" to="HBoxContainer/LeftScrollContainer/CodePanel/Tree" method="_on_button_clicked"]

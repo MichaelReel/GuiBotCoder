@@ -20,7 +20,7 @@ func _ready() -> void:
 	var file_access: AIFileAccess = AIFileAccess.new()
 	var entity: AIEntity = file_access.load_file("test_ai_entity.json")
 	
-	hide_root=true
+	hide_root = true
 	root = EntityGui.new(self, entity)
 	
 	# Save back to test file to see changes in git diff
