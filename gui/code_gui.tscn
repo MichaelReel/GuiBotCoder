@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://beoii7vqtt18j" path="res://assets/buttons/Remove.svg" id="3_ujpyy"]
 [ext_resource type="Texture2D" uid="uid://cl7k8ytumsj67" path="res://assets/buttons/Edit.svg" id="4_ys0e5"]
 
-[node name="Control" type="MarginContainer"]
+[node name="MarginContainer" type="MarginContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -19,19 +19,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 metadata/_edit_use_anchors_ = true
 
-[node name="HBoxContainer" type="HSplitContainer" parent="."]
-layout_mode = 2
-
-[node name="LeftScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="CodePanel" type="PanelContainer" parent="HBoxContainer/LeftScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Tree" type="Tree" parent="HBoxContainer/LeftScrollContainer/CodePanel"]
+[node name="Tree" type="Tree" parent="."]
 layout_mode = 2
 columns = 4
 script = ExtResource("1_1bwlm")
@@ -39,4 +27,42 @@ plus_button_texture2d = ExtResource("2_bxein")
 minus_button_texture2d = ExtResource("3_ujpyy")
 modify_button_texture2d = ExtResource("4_ys0e5")
 
-[connection signal="button_clicked" from="HBoxContainer/LeftScrollContainer/CodePanel/Tree" to="HBoxContainer/LeftScrollContainer/CodePanel/Tree" method="_on_button_clicked"]
+[node name="AddPropertyPopupPanel" type="PopupPanel" parent="Tree"]
+position = Vector2i(435, 220)
+size = Vector2i(350, 110)
+visible = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tree/AddPropertyPopupPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Tree/AddPropertyPopupPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Property: "
+
+[node name="TextEdit" type="TextEdit" parent="Tree/AddPropertyPopupPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Property Name"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tree/AddPropertyPopupPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="AddButton" type="Button" parent="Tree/AddPropertyPopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Add"
+
+[node name="CancelButton" type="Button" parent="Tree/AddPropertyPopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
+[connection signal="button_clicked" from="Tree" to="Tree" method="_on_button_clicked"]
