@@ -1,12 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://11rbq5xwc1uy"]
+[gd_scene load_steps=11 format=3 uid="uid://11rbq5xwc1uy"]
 
 [ext_resource type="Script" path="res://gui/instruction_gui.gd" id="1_1bwlm"]
 [ext_resource type="Texture2D" uid="uid://6tq41m622hrr" path="res://assets/buttons/Add.svg" id="2_bxein"]
 [ext_resource type="Texture2D" uid="uid://beoii7vqtt18j" path="res://assets/buttons/Remove.svg" id="3_ujpyy"]
 [ext_resource type="Texture2D" uid="uid://cl7k8ytumsj67" path="res://assets/buttons/Edit.svg" id="4_ys0e5"]
-[ext_resource type="Script" path="res://gui/add_property_popup.gd" id="5_apyrb"]
-[ext_resource type="Script" path="res://gui/edit_property_popup.gd" id="6_o3sou"]
-[ext_resource type="Script" path="res://gui/delete_property_popup.gd" id="6_oqswt"]
+[ext_resource type="Script" path="res://gui/popups/add_property_popup.gd" id="5_apyrb"]
+[ext_resource type="Script" path="res://gui/popups/edit_property_popup.gd" id="6_o3sou"]
+[ext_resource type="Script" path="res://gui/popups/delete_property_popup.gd" id="6_oqswt"]
+[ext_resource type="Script" path="res://gui/popups/add_variable_popup.gd" id="8_ailvr"]
+[ext_resource type="Script" path="res://gui/popups/edit_variable_popup.gd" id="9_qagqt"]
+[ext_resource type="Script" path="res://gui/popups/delete_variable_popup.gd" id="10_u5s4t"]
 
 [node name="MarginContainer" type="MarginContainer"]
 anchors_preset = 15
@@ -95,7 +98,7 @@ layout_mode = 2
 [node name="EditButton" type="Button" parent="Tree/EditPropertyPopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Add"
+text = "Accept"
 
 [node name="CancelButton" type="Button" parent="Tree/EditPropertyPopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -136,6 +139,112 @@ text = "Delete"
 layout_mode = 2
 text = "Cancel"
 
+[node name="AddVariablePopupPanel" type="PopupPanel" parent="Tree"]
+title = "Add Variable"
+position = Vector2i(470, 250)
+size = Vector2i(320, 80)
+borderless = false
+script = ExtResource("8_ailvr")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tree/AddVariablePopupPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VariableNameField" type="LineEdit" parent="Tree/AddVariablePopupPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "variable name..."
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tree/AddVariablePopupPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="AddButton" type="Button" parent="Tree/AddVariablePopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Add"
+
+[node name="CancelButton" type="Button" parent="Tree/AddVariablePopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
+[node name="EditVariablePopupPanel" type="PopupPanel" parent="Tree"]
+title = "Edit Variable"
+position = Vector2i(470, 250)
+size = Vector2i(320, 80)
+borderless = false
+script = ExtResource("9_qagqt")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tree/EditVariablePopupPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VariableNameField" type="LineEdit" parent="Tree/EditVariablePopupPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "variable name..."
+select_all_on_focus = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tree/EditVariablePopupPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="EditButton" type="Button" parent="Tree/EditVariablePopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Accept"
+
+[node name="CancelButton" type="Button" parent="Tree/EditVariablePopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
+[node name="DeleteVariablePopupPanel" type="PopupPanel" parent="Tree"]
+title = "Delete Variable?"
+position = Vector2i(470, 250)
+size = Vector2i(320, 80)
+borderless = false
+script = ExtResource("10_u5s4t")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tree/DeleteVariablePopupPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VariableNameField" type="LineEdit" parent="Tree/DeleteVariablePopupPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+editable = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tree/DeleteVariablePopupPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="DeleteButton" type="Button" parent="Tree/DeleteVariablePopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Delete"
+
+[node name="CancelButton" type="Button" parent="Tree/DeleteVariablePopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
 [connection signal="button_clicked" from="Tree" to="Tree" method="_on_button_clicked"]
 [connection signal="add_property" from="Tree/AddPropertyPopupPanel" to="Tree" method="_on_add_property_popup_panel_add_property"]
 [connection signal="pressed" from="Tree/AddPropertyPopupPanel/VBoxContainer/HBoxContainer/AddButton" to="Tree/AddPropertyPopupPanel" method="_on_add_button_pressed"]
@@ -146,3 +255,12 @@ text = "Cancel"
 [connection signal="delete_property" from="Tree/DeletePropertyPopupPanel" to="Tree" method="_on_delete_property_popup_panel_delete_property"]
 [connection signal="pressed" from="Tree/DeletePropertyPopupPanel/VBoxContainer/HBoxContainer/DeleteButton" to="Tree/DeletePropertyPopupPanel" method="_on_delete_button_pressed"]
 [connection signal="pressed" from="Tree/DeletePropertyPopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/DeletePropertyPopupPanel" method="_on_cancel_button_pressed"]
+[connection signal="add_variable" from="Tree/AddVariablePopupPanel" to="Tree" method="_on_add_variable_popup_panel_add_variable"]
+[connection signal="pressed" from="Tree/AddVariablePopupPanel/VBoxContainer/HBoxContainer/AddButton" to="Tree/AddVariablePopupPanel" method="_on_add_button_pressed"]
+[connection signal="pressed" from="Tree/AddVariablePopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/AddVariablePopupPanel" method="_on_cancel_button_pressed"]
+[connection signal="edit_variable" from="Tree/EditVariablePopupPanel" to="Tree" method="_on_edit_variable_popup_panel_edit_variable"]
+[connection signal="pressed" from="Tree/EditVariablePopupPanel/VBoxContainer/HBoxContainer/EditButton" to="Tree/EditVariablePopupPanel" method="_on_edit_button_pressed"]
+[connection signal="pressed" from="Tree/EditVariablePopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/EditVariablePopupPanel" method="_on_cancel_button_pressed"]
+[connection signal="delete_variable" from="Tree/DeleteVariablePopupPanel" to="Tree" method="_on_delete_variable_popup_panel_delete_variable"]
+[connection signal="pressed" from="Tree/DeleteVariablePopupPanel/VBoxContainer/HBoxContainer/DeleteButton" to="Tree/DeleteVariablePopupPanel" method="_on_delete_button_pressed"]
+[connection signal="pressed" from="Tree/DeleteVariablePopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/DeleteVariablePopupPanel" method="_on_cancel_button_pressed"]

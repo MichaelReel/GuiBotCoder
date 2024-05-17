@@ -43,53 +43,99 @@ func update() -> void:
 	for state in entity.states:
 		state_guis.append(StateGui.new(self, state))
 
-func find_propertygui_by_treeitem(treeitem: TreeItem) -> PropertyGui:
+#region: Properties
+
+func _setup_properties_section(root: TreeItem) -> TreeItem:
+	var properties: TreeItem = instruction_gui.create_item(root)
+	properties.set_text(Column.TITLE, "Entity Properties")
+	properties.add_button(Column.ADD_BUTTON, instruction_gui.plus_button_texture2d, EditType.ADD_PROPERTY, false, "Add Property")
+	return properties
+
+func _find_propertygui_by_treeitem(treeitem: TreeItem) -> PropertyGui:
 	# Hopefully there are not too many properties
 	var property_gui: PropertyGui = property_guis.filter(
 		func(prop_gui: PropertyGui): return prop_gui.treeitem == treeitem
 	).front()
 	return property_gui
 
-func no_propertygui_with_propery_name(propery_name: String) -> bool:
+func _no_propertygui_with_propery_name(propery_name: String) -> bool:
 	var properties: Array[PropertyGui] = property_guis.filter(
 		func(prop_gui: PropertyGui):
 			return prop_gui.property.property_name == propery_name
 	)
 	return properties.is_empty()
-	
 
 func get_property_name_by_treeitem(treeitem: TreeItem) -> String:
-	return find_propertygui_by_treeitem(treeitem).property.property_name
+	return _find_propertygui_by_treeitem(treeitem).property.property_name
 
 func add_property(property_name: String) -> void:
-	if no_propertygui_with_propery_name(property_name):
+	if _no_propertygui_with_propery_name(property_name):
 		var new_property: AIProperty = AIProperty.new(property_name)
 		var new_property_gui: PropertyGui = PropertyGui.new(self, new_property)
+		entity.properties.append(new_property)
 		property_guis.append(new_property_gui)
 
+func edit_property_by_treeitem(treeitem: TreeItem, property_name: String) -> void:
+	if _no_propertygui_with_propery_name(property_name):
+		var property_gui: PropertyGui = _find_propertygui_by_treeitem(treeitem)
+		property_gui.property.property_name = property_name
+		property_gui.treeitem.set_text(Column.TITLE, property_name)
+
 func delete_property_by_treeitem(treeitem: TreeItem) -> void:
-	var property_gui: PropertyGui = find_propertygui_by_treeitem(treeitem)
+	var property_gui: PropertyGui = _find_propertygui_by_treeitem(treeitem)
 	properties_treeitem.remove_child(property_gui.treeitem)
 	entity.properties.erase(property_gui.property)
+	property_guis.erase(property_gui)
 
-func edit_property_by_treeitem(treeitem: TreeItem, property_name: String) -> void:
-	var property_gui: PropertyGui = find_propertygui_by_treeitem(treeitem)
-	property_gui.property.property_name = property_name
-	property_gui.treeitem.set_text(Column.TITLE, property_name)
+#endregion
 
-func _setup_properties_section(root: TreeItem) -> TreeItem:
-	var properties: TreeItem = instruction_gui.create_item(root)
-	properties.set_text(Column.TITLE, "Entity Properties")
-	properties.add_button(Column.ADD_BUTTON, instruction_gui.plus_button_texture2d, EditType.ADD_PROPERTY, false, "Add Property")
-	
-	return properties
+#region: Variables
 
 func _setup_variables_section(root: TreeItem) -> TreeItem:
 	var variables: TreeItem = instruction_gui.create_item(root)
 	variables.set_text(Column.TITLE, "State Variables")
 	variables.add_button(Column.ADD_BUTTON, instruction_gui.plus_button_texture2d, EditType.ADD_VARIABLE, false, "Add Variable")
-	
 	return variables
+
+func _find_variablegui_by_treeitem(treeitem: TreeItem) -> VariableGui:
+	# Hopefully there are not too many properties
+	var variable_gui: VariableGui = variable_guis.filter(
+		func(var_gui: VariableGui): return var_gui.treeitem == treeitem
+	).front()
+	return variable_gui
+
+func _no_variablegui_with_variable_name(variable_name: String) -> bool:
+	var variables: Array[VariableGui] = variable_guis.filter(
+		func(var_gui: VariableGui):
+			return var_gui.variable.variable_name == variable_name
+	)
+	return variables.is_empty()
+
+func get_variable_name_by_treeitem(treeitem: TreeItem) -> String:
+	return _find_variablegui_by_treeitem(treeitem).variable.variable_name
+
+func add_variable(variable_name: String) -> void:
+	if _no_variablegui_with_variable_name(variable_name):
+		var new_variable: AIVariable = AIVariable.new(variable_name)
+		var new_variable_gui: VariableGui = VariableGui.new(self, new_variable)
+		entity.variables.append(new_variable)
+		variable_guis.append(new_variable_gui)
+	
+func edit_variable_by_treeitem(treeitem: TreeItem, variable_name: String) -> void:
+	if _no_variablegui_with_variable_name(variable_name):
+		var variable_gui: VariableGui = _find_variablegui_by_treeitem(treeitem)
+		variable_gui.variable.variable_name = variable_name
+		variable_gui.treeitem.set_text(Column.TITLE, variable_name)
+
+func delete_variable_by_treeitem(treeitem: TreeItem) -> void:
+	var variable_gui: VariableGui = _find_variablegui_by_treeitem(treeitem)
+	variables_treeitem.remove_child(variable_gui.treeitem)
+	entity.variables.erase(variable_gui.variable)
+	variable_guis.erase(variable_gui)
+
+#endregion
+
+#region: States
 
 func _setup_states_section(root: TreeItem) -> TreeItem:
 	var states: TreeItem = instruction_gui.create_item(root)
@@ -97,3 +143,5 @@ func _setup_states_section(root: TreeItem) -> TreeItem:
 	states.add_button(Column.ADD_BUTTON, instruction_gui.plus_button_texture2d, EditType.ADD_STATE, false, "Add State")
 	
 	return states
+
+#endregion

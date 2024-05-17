@@ -15,4 +15,17 @@ func _init(entity_gui_: EntityGui, variable: AIVariable) -> void:
 func update() -> void:
 	# Make sure the GUI matches the elements in the variable
 	treeitem.set_text(Column.TITLE, variable.variable_name)
-	treeitem.add_button(Column.REMOVE_BUTTON, entity_gui.instruction_gui.minus_button_texture2d, EditType.REMOVE_PROPERTY, false, "Remove Variable")
+	treeitem.add_button(
+		Column.EDIT_BUTTON,
+		entity_gui.instruction_gui.modify_button_texture2d,
+		EditType.EDIT_VARIABLE,
+		false,
+		"Edit Variable"
+	)
+	treeitem.add_button(
+		Column.REMOVE_BUTTON,
+		entity_gui.instruction_gui.minus_button_texture2d,
+		EditType.REMOVE_VARIABLE,
+		false,
+		"Remove Variable"
+	)
