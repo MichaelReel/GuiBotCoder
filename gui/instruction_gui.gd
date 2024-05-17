@@ -8,6 +8,8 @@ extends Tree
 var root: EntityGui
 
 @onready var add_property_popup_panel: PopupPanel = $AddPropertyPopupPanel
+@onready var edit_property_popup_panel: PopupPanel = $EditPropertyPopupPanel
+@onready var delete_property_popup_panel: PopupPanel = $DeletePropertyPopupPanel
 
 func _ready() -> void:
 	set_column_expand(Column.TITLE, true)
@@ -32,7 +34,7 @@ func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_ind
 	match id:
 		EditType.ADD_PROPERTY:
 			print("ADD_PROPERTY: ", str(item))
-			add_property_popup_panel.visible = true
+			add_property_popup_panel.show_add()
 		EditType.ADD_VARIABLE:
 			print("ADD_VARIABLE: ", str(item))
 		EditType.ADD_STATE:
@@ -45,6 +47,7 @@ func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_ind
 			print("ADD_CONDITION: ", str(item))
 		EditType.REMOVE_PROPERTY:
 			print("REMOVE_PROPERTY: ", str(item))
+			delete_property_popup_panel.show_delete(item, root.get_property_name_by_treeitem(item))
 		EditType.REMOVE_VARIABLE:
 			print("REMOVE_VARIABLE: ", str(item))
 		EditType.REMOVE_STATE:
@@ -57,6 +60,7 @@ func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_ind
 			print("REMOVE_CONDITION: ", str(item))
 		EditType.EDIT_PROPERTY:
 			print("EDIT_PROPERTY: ", str(item))
+			edit_property_popup_panel.show_edit(item, root.get_property_name_by_treeitem(item))
 		EditType.EDIT_VARIABLE:
 			print("EDIT_VARIABLE: ", str(item))
 		EditType.EDIT_STATE:
@@ -70,3 +74,12 @@ func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_ind
 
 func _get_random_direction() -> Vector2:
 	return Vector2.from_angle(randf_range(0, PI * 2.0))
+
+func _on_add_property_popup_panel_add_property(property_name: String) -> void:
+	root.add_property(property_name)
+
+func _on_delete_property_popup_panel_delete_property(treeitem: TreeItem) -> void:
+	root.delete_property_by_treeitem(treeitem)
+
+func _on_edit_property_popup_panel_edit_property(treeitem: TreeItem, property_name: String) -> void:
+	root.edit_property_by_treeitem(treeitem, property_name)

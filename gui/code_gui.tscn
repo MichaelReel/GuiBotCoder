@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://11rbq5xwc1uy"]
+[gd_scene load_steps=8 format=3 uid="uid://11rbq5xwc1uy"]
 
 [ext_resource type="Script" path="res://gui/instruction_gui.gd" id="1_1bwlm"]
 [ext_resource type="Texture2D" uid="uid://6tq41m622hrr" path="res://assets/buttons/Add.svg" id="2_bxein"]
 [ext_resource type="Texture2D" uid="uid://beoii7vqtt18j" path="res://assets/buttons/Remove.svg" id="3_ujpyy"]
 [ext_resource type="Texture2D" uid="uid://cl7k8ytumsj67" path="res://assets/buttons/Edit.svg" id="4_ys0e5"]
+[ext_resource type="Script" path="res://gui/add_property_popup.gd" id="5_apyrb"]
+[ext_resource type="Script" path="res://gui/edit_property_popup.gd" id="6_o3sou"]
+[ext_resource type="Script" path="res://gui/delete_property_popup.gd" id="6_oqswt"]
 
 [node name="MarginContainer" type="MarginContainer"]
 anchors_preset = 15
@@ -28,9 +31,11 @@ minus_button_texture2d = ExtResource("3_ujpyy")
 modify_button_texture2d = ExtResource("4_ys0e5")
 
 [node name="AddPropertyPopupPanel" type="PopupPanel" parent="Tree"]
-position = Vector2i(435, 220)
-size = Vector2i(350, 110)
-visible = true
+title = "Add Property"
+position = Vector2i(470, 250)
+size = Vector2i(320, 80)
+borderless = false
+script = ExtResource("5_apyrb")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Tree/AddPropertyPopupPanel"]
 anchors_preset = 15
@@ -43,15 +48,10 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="Tree/AddPropertyPopupPanel/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 1
-text = "Property: "
-
-[node name="TextEdit" type="TextEdit" parent="Tree/AddPropertyPopupPanel/VBoxContainer"]
+[node name="PropertyNameField" type="LineEdit" parent="Tree/AddPropertyPopupPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-placeholder_text = "Property Name"
+placeholder_text = "property name..."
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Tree/AddPropertyPopupPanel/VBoxContainer"]
 layout_mode = 2
@@ -65,4 +65,84 @@ text = "Add"
 layout_mode = 2
 text = "Cancel"
 
+[node name="EditPropertyPopupPanel" type="PopupPanel" parent="Tree"]
+title = "Edit Property"
+position = Vector2i(470, 250)
+size = Vector2i(320, 80)
+borderless = false
+script = ExtResource("6_o3sou")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tree/EditPropertyPopupPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PropertyNameField" type="LineEdit" parent="Tree/EditPropertyPopupPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "property name..."
+select_all_on_focus = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tree/EditPropertyPopupPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="EditButton" type="Button" parent="Tree/EditPropertyPopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Add"
+
+[node name="CancelButton" type="Button" parent="Tree/EditPropertyPopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
+[node name="DeletePropertyPopupPanel" type="PopupPanel" parent="Tree"]
+title = "Delete Property?"
+position = Vector2i(470, 250)
+size = Vector2i(320, 80)
+borderless = false
+script = ExtResource("6_oqswt")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tree/DeletePropertyPopupPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PropertyNameField" type="LineEdit" parent="Tree/DeletePropertyPopupPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+editable = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tree/DeletePropertyPopupPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="DeleteButton" type="Button" parent="Tree/DeletePropertyPopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Delete"
+
+[node name="CancelButton" type="Button" parent="Tree/DeletePropertyPopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
 [connection signal="button_clicked" from="Tree" to="Tree" method="_on_button_clicked"]
+[connection signal="add_property" from="Tree/AddPropertyPopupPanel" to="Tree" method="_on_add_property_popup_panel_add_property"]
+[connection signal="pressed" from="Tree/AddPropertyPopupPanel/VBoxContainer/HBoxContainer/AddButton" to="Tree/AddPropertyPopupPanel" method="_on_add_button_pressed"]
+[connection signal="pressed" from="Tree/AddPropertyPopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/AddPropertyPopupPanel" method="_on_cancel_button_pressed"]
+[connection signal="edit_property" from="Tree/EditPropertyPopupPanel" to="Tree" method="_on_edit_property_popup_panel_edit_property"]
+[connection signal="pressed" from="Tree/EditPropertyPopupPanel/VBoxContainer/HBoxContainer/EditButton" to="Tree/EditPropertyPopupPanel" method="_on_edit_button_pressed"]
+[connection signal="pressed" from="Tree/EditPropertyPopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/EditPropertyPopupPanel" method="_on_cancel_button_pressed"]
+[connection signal="delete_property" from="Tree/DeletePropertyPopupPanel" to="Tree" method="_on_delete_property_popup_panel_delete_property"]
+[connection signal="pressed" from="Tree/DeletePropertyPopupPanel/VBoxContainer/HBoxContainer/DeleteButton" to="Tree/DeletePropertyPopupPanel" method="_on_delete_button_pressed"]
+[connection signal="pressed" from="Tree/DeletePropertyPopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/DeletePropertyPopupPanel" method="_on_cancel_button_pressed"]
