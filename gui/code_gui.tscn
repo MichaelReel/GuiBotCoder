@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://11rbq5xwc1uy"]
+[gd_scene load_steps=14 format=3 uid="uid://11rbq5xwc1uy"]
 
 [ext_resource type="Script" path="res://gui/instruction_gui.gd" id="1_1bwlm"]
 [ext_resource type="Texture2D" uid="uid://6tq41m622hrr" path="res://assets/buttons/Add.svg" id="2_bxein"]
@@ -10,6 +10,9 @@
 [ext_resource type="Script" path="res://gui/popups/add_variable_popup.gd" id="8_ailvr"]
 [ext_resource type="Script" path="res://gui/popups/edit_variable_popup.gd" id="9_qagqt"]
 [ext_resource type="Script" path="res://gui/popups/delete_variable_popup.gd" id="10_u5s4t"]
+[ext_resource type="Script" path="res://gui/popups/add_state_popup.gd" id="11_iwirm"]
+[ext_resource type="Script" path="res://gui/popups/edit_state_popup.gd" id="12_icmds"]
+[ext_resource type="Script" path="res://gui/popups/delete_state_popup.gd" id="13_fv0gp"]
 
 [node name="Window" type="Window"]
 title = "Configure State Machine"
@@ -41,8 +44,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 316.0
-offset_bottom = 76.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -76,8 +79,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 316.0
-offset_bottom = 76.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -112,8 +115,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 316.0
-offset_bottom = 76.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -147,8 +150,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 316.0
-offset_bottom = 76.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -182,8 +185,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 316.0
-offset_bottom = 76.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -218,8 +221,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 316.0
-offset_bottom = 76.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -237,6 +240,112 @@ size_flags_horizontal = 3
 text = "Delete"
 
 [node name="CancelButton" type="Button" parent="Tree/DeleteVariablePopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
+[node name="AddStatePopupPanel" type="PopupPanel" parent="Tree"]
+title = "Add State"
+position = Vector2i(470, 250)
+size = Vector2i(320, 80)
+borderless = false
+script = ExtResource("11_iwirm")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tree/AddStatePopupPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StateNameField" type="LineEdit" parent="Tree/AddStatePopupPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "state name..."
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tree/AddStatePopupPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="AddButton" type="Button" parent="Tree/AddStatePopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Add"
+
+[node name="CancelButton" type="Button" parent="Tree/AddStatePopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
+[node name="EditStatePopupPanel" type="PopupPanel" parent="Tree"]
+title = "Edit State"
+position = Vector2i(470, 250)
+size = Vector2i(320, 80)
+borderless = false
+script = ExtResource("12_icmds")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tree/EditStatePopupPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StateNameField" type="LineEdit" parent="Tree/EditStatePopupPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "state name..."
+select_all_on_focus = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tree/EditStatePopupPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="EditButton" type="Button" parent="Tree/EditStatePopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Accept"
+
+[node name="CancelButton" type="Button" parent="Tree/EditStatePopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
+[node name="DeleteStatePopupPanel" type="PopupPanel" parent="Tree"]
+title = "Delete State?"
+position = Vector2i(470, 250)
+size = Vector2i(320, 80)
+borderless = false
+script = ExtResource("13_fv0gp")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tree/DeleteStatePopupPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StateNameField" type="LineEdit" parent="Tree/DeleteStatePopupPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+editable = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tree/DeleteStatePopupPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="DeleteButton" type="Button" parent="Tree/DeleteStatePopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Delete"
+
+[node name="CancelButton" type="Button" parent="Tree/DeleteStatePopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Cancel"
 
@@ -259,3 +368,12 @@ text = "Cancel"
 [connection signal="delete_variable" from="Tree/DeleteVariablePopupPanel" to="Tree" method="_on_delete_variable_popup_panel_delete_variable"]
 [connection signal="pressed" from="Tree/DeleteVariablePopupPanel/VBoxContainer/HBoxContainer/DeleteButton" to="Tree/DeleteVariablePopupPanel" method="_on_delete_button_pressed"]
 [connection signal="pressed" from="Tree/DeleteVariablePopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/DeleteVariablePopupPanel" method="_on_cancel_button_pressed"]
+[connection signal="add_state" from="Tree/AddStatePopupPanel" to="Tree" method="_on_add_state_popup_panel_add_state"]
+[connection signal="pressed" from="Tree/AddStatePopupPanel/VBoxContainer/HBoxContainer/AddButton" to="Tree/AddStatePopupPanel" method="_on_add_button_pressed"]
+[connection signal="pressed" from="Tree/AddStatePopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/AddStatePopupPanel" method="_on_cancel_button_pressed"]
+[connection signal="edit_state" from="Tree/EditStatePopupPanel" to="Tree" method="_on_edit_state_popup_panel_edit_state"]
+[connection signal="pressed" from="Tree/EditStatePopupPanel/VBoxContainer/HBoxContainer/EditButton" to="Tree/EditStatePopupPanel" method="_on_edit_button_pressed"]
+[connection signal="pressed" from="Tree/EditStatePopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/EditStatePopupPanel" method="_on_cancel_button_pressed"]
+[connection signal="delete_state" from="Tree/DeleteStatePopupPanel" to="Tree" method="_on_delete_state_popup_panel_delete_state"]
+[connection signal="pressed" from="Tree/DeleteStatePopupPanel/VBoxContainer/HBoxContainer/DeleteButton" to="Tree/DeleteStatePopupPanel" method="_on_delete_button_pressed"]
+[connection signal="pressed" from="Tree/DeleteStatePopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/DeleteStatePopupPanel" method="_on_cancel_button_pressed"]

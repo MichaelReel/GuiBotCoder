@@ -24,7 +24,20 @@ func _init(entity_gui: EntityGui, state: AIState) -> void:
 func update() -> void:
 	# Make sure the GUI matches the elements in the state
 	treeitem.set_text(Column.TITLE, state.state_name)
-	treeitem.add_button(Column.REMOVE_BUTTON, entity_gui.instruction_gui.minus_button_texture2d, EditType.REMOVE_STATE, false, "Remove State")
+	treeitem.add_button(
+		Column.EDIT_BUTTON,
+		entity_gui.instruction_gui.modify_button_texture2d,
+		EditType.EDIT_STATE,
+		false,
+		"Edit State"
+	)
+	treeitem.add_button(
+		Column.REMOVE_BUTTON,
+		entity_gui.instruction_gui.minus_button_texture2d,
+		EditType.REMOVE_STATE,
+		false,
+		"Remove State"
+	)
 	
 	# Until performance is an issue, just recreate all gui
 	actions_guis.clear()

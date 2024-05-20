@@ -8,11 +8,14 @@ extends Tree
 var root: EntityGui
 
 @onready var add_property_popup_panel: PopupPanel = $AddPropertyPopupPanel
-@onready var edit_property_popup_panel: PopupPanel = $EditPropertyPopupPanel
-@onready var delete_property_popup_panel: PopupPanel = $DeletePropertyPopupPanel
 @onready var add_variable_popup_panel: PopupPanel = $AddVariablePopupPanel
+@onready var add_state_popup_panel: PopupPanel = $AddStatePopupPanel
+@onready var edit_property_popup_panel: PopupPanel = $EditPropertyPopupPanel
 @onready var edit_variable_popup_panel: PopupPanel = $EditVariablePopupPanel
+@onready var edit_state_popup_panel: PopupPanel = $EditStatePopupPanel
+@onready var delete_property_popup_panel: PopupPanel = $DeletePropertyPopupPanel
 @onready var delete_variable_popup_panel: PopupPanel = $DeleteVariablePopupPanel
+@onready var delete_state_popup_panel: PopupPanel = $DeleteStatePopupPanel
 
 func _ready() -> void:
 	set_column_expand(Column.TITLE, true)
@@ -40,7 +43,7 @@ func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_ind
 		EditType.ADD_VARIABLE:
 			add_variable_popup_panel.show_add()
 		EditType.ADD_STATE:
-			print("ADD_STATE: ", str(item))
+			add_state_popup_panel.show_add()
 		EditType.ADD_ACTION:
 			print("ADD_ACTION: ", str(item))
 		EditType.ADD_TRANSISTION:
@@ -52,7 +55,7 @@ func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_ind
 		EditType.EDIT_VARIABLE:
 			edit_variable_popup_panel.show_edit(item, root.get_variable_name_by_treeitem(item))
 		EditType.EDIT_STATE:
-			print("EDIT_STATE: ", str(item))
+			edit_state_popup_panel.show_edit(item, root.get_state_name_by_treeitem(item))
 		EditType.EDIT_ACTION:
 			print("EDIT_ACTION: ", str(item))
 		EditType.EDIT_TRANSISTION:
@@ -64,7 +67,7 @@ func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_ind
 		EditType.REMOVE_VARIABLE:
 			delete_variable_popup_panel.show_delete(item, root.get_variable_name_by_treeitem(item))
 		EditType.REMOVE_STATE:
-			print("REMOVE_STATE: ", str(item))
+			delete_state_popup_panel.show_delete(item, root.get_state_name_by_treeitem(item))
 		EditType.REMOVE_ACTION:
 			print("REMOVE_ACTION: ", str(item))
 		EditType.REMOVE_TRANSISTION:
@@ -75,6 +78,8 @@ func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_ind
 func _get_random_direction() -> Vector2:
 	return Vector2.from_angle(randf_range(0, PI * 2.0))
 
+#region: Properties
+
 func _on_add_property_popup_panel_add_property(property_name: String) -> void:
 	root.add_property(property_name)
 
@@ -84,6 +89,10 @@ func _on_edit_property_popup_panel_edit_property(treeitem: TreeItem, property_na
 func _on_delete_property_popup_panel_delete_property(treeitem: TreeItem) -> void:
 	root.delete_property_by_treeitem(treeitem)
 
+#endregion
+
+#region: Variables
+
 func _on_add_variable_popup_panel_add_variable(variable_name: String) -> void:
 	root.add_variable(variable_name)
 
@@ -92,3 +101,18 @@ func _on_edit_variable_popup_panel_edit_variable(treeitem: TreeItem, variable_na
 
 func _on_delete_variable_popup_panel_delete_variable(treeitem: TreeItem) -> void:
 	root.delete_variable_by_treeitem(treeitem)
+
+#endregion
+
+#region: States
+
+func _on_add_state_popup_panel_add_state(state_name: String) -> void:
+	root.add_state(state_name)
+
+func _on_edit_state_popup_panel_edit_state(treeitem: TreeItem, state_name: String) -> void:
+	root.edit_state_by_treeitem(treeitem, state_name)
+
+func _on_delete_state_popup_panel_delete_state(treeitem: TreeItem) -> void:
+	root.delete_state_by_treeitem(treeitem)
+
+#endregion

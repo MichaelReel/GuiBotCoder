@@ -114,13 +114,13 @@ func _no_variablegui_with_variable_name(variable_name: String) -> bool:
 func get_variable_name_by_treeitem(treeitem: TreeItem) -> String:
 	return _find_variablegui_by_treeitem(treeitem).variable.variable_name
 
-func add_variable(variable_name: String) -> void:
-	if _no_variablegui_with_variable_name(variable_name):
-		var new_variable: AIVariable = AIVariable.new(variable_name)
-		var new_variable_gui: VariableGui = VariableGui.new(self, new_variable)
-		entity.variables.append(new_variable)
-		variable_guis.append(new_variable_gui)
-	
+func add_variable(state_name: String) -> void:
+	if _no_stategui_with_state_name(state_name):
+		var new_state: AIState = AIState.new(state_name)
+		var new_state_gui: StateGui = StateGui.new(self, new_state)
+		entity.states.append(new_state)
+		state_guis.append(new_state_gui)
+
 func edit_variable_by_treeitem(treeitem: TreeItem, variable_name: String) -> void:
 	if _no_variablegui_with_variable_name(variable_name):
 		var variable_gui: VariableGui = _find_variablegui_by_treeitem(treeitem)
@@ -141,7 +141,42 @@ func _setup_states_section(root: TreeItem) -> TreeItem:
 	var states: TreeItem = instruction_gui.create_item(root)
 	states.set_text(Column.TITLE, "States")
 	states.add_button(Column.ADD_BUTTON, instruction_gui.plus_button_texture2d, EditType.ADD_STATE, false, "Add State")
-	
 	return states
+
+func _find_stategui_by_treeitem(treeitem: TreeItem) -> StateGui:
+	# Hopefully there are not too many properties
+	var state_gui: StateGui = state_guis.filter(
+		func(st_gui: StateGui): return st_gui.treeitem == treeitem
+	).front()
+	return state_gui
+
+func _no_stategui_with_state_name(state_name: String) -> bool:
+	var states: Array[StateGui] = state_guis.filter(
+		func(st_gui: StateGui):
+			return st_gui.state.state_name == state_name
+	)
+	return states.is_empty()
+
+func get_state_name_by_treeitem(treeitem: TreeItem) -> String:
+	return _find_stategui_by_treeitem(treeitem).state.state_name
+
+func add_state(state_name: String) -> void:
+	if _no_stategui_with_state_name(state_name):
+		var new_state: AIState = AIState.new(state_name)
+		var new_state_gui: StateGui = StateGui.new(self, new_state)
+		entity.states.append(new_state)
+		state_guis.append(new_state_gui)
+	
+func edit_state_by_treeitem(treeitem: TreeItem, state_name: String) -> void:
+	if _no_stategui_with_state_name(state_name):
+		var state_gui: StateGui = _find_stategui_by_treeitem(treeitem)
+		state_gui.state.state_name = state_name
+		state_gui.treeitem.set_text(Column.TITLE, state_name)
+
+func delete_state_by_treeitem(treeitem: TreeItem) -> void:
+	var state_gui: StateGui = _find_stategui_by_treeitem(treeitem)
+	states_treeitem.remove_child(state_gui.treeitem)
+	entity.states.erase(state_gui.state)
+	state_guis.erase(state_gui)
 
 #endregion
