@@ -10,6 +10,7 @@ var root: EntityGui
 @onready var add_property_popup_panel: PopupPanel = $AddPropertyPopupPanel
 @onready var add_variable_popup_panel: PopupPanel = $AddVariablePopupPanel
 @onready var add_state_popup_panel: PopupPanel = $AddStatePopupPanel
+@onready var add_action_popup_panel: PopupPanel = $AddActionPopupPanel
 @onready var edit_property_popup_panel: PopupPanel = $EditPropertyPopupPanel
 @onready var edit_variable_popup_panel: PopupPanel = $EditVariablePopupPanel
 @onready var edit_state_popup_panel: PopupPanel = $EditStatePopupPanel
@@ -45,7 +46,7 @@ func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_ind
 		EditType.ADD_STATE:
 			add_state_popup_panel.show_add()
 		EditType.ADD_ACTION:
-			print("ADD_ACTION: ", str(item))
+			add_action_popup_panel.show_add()
 		EditType.ADD_TRANSISTION:
 			print("ADD_TRANSISTION: ", str(item))
 		EditType.ADD_CONDITION:

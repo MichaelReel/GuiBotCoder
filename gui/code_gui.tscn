@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://11rbq5xwc1uy"]
+[gd_scene load_steps=15 format=3 uid="uid://11rbq5xwc1uy"]
 
 [ext_resource type="Script" path="res://gui/instruction_gui.gd" id="1_1bwlm"]
 [ext_resource type="Texture2D" uid="uid://6tq41m622hrr" path="res://assets/buttons/Add.svg" id="2_bxein"]
@@ -13,13 +13,14 @@
 [ext_resource type="Script" path="res://gui/popups/add_state_popup.gd" id="11_iwirm"]
 [ext_resource type="Script" path="res://gui/popups/edit_state_popup.gd" id="12_icmds"]
 [ext_resource type="Script" path="res://gui/popups/delete_state_popup.gd" id="13_fv0gp"]
+[ext_resource type="Script" path="res://gui/popups/add_action_popup.gd" id="14_j4qwy"]
 
 [node name="Window" type="Window"]
 title = "Configure State Machine"
 position = Vector2i(40, 40)
 size = Vector2i(1200, 720)
 
-[node name="Tree" type="Tree" parent="."]
+[node name="InstructionGui" type="Tree" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -31,14 +32,14 @@ plus_button_texture2d = ExtResource("2_bxein")
 minus_button_texture2d = ExtResource("3_ujpyy")
 modify_button_texture2d = ExtResource("4_ys0e5")
 
-[node name="AddPropertyPopupPanel" type="PopupPanel" parent="Tree"]
+[node name="AddPropertyPopupPanel" type="PopupPanel" parent="InstructionGui"]
 title = "Add Property"
 position = Vector2i(470, 250)
 size = Vector2i(320, 80)
 borderless = false
 script = ExtResource("5_apyrb")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Tree/AddPropertyPopupPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="InstructionGui/AddPropertyPopupPanel"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -49,31 +50,31 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PropertyNameField" type="LineEdit" parent="Tree/AddPropertyPopupPanel/VBoxContainer"]
+[node name="PropertyNameField" type="LineEdit" parent="InstructionGui/AddPropertyPopupPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 placeholder_text = "property name..."
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Tree/AddPropertyPopupPanel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="InstructionGui/AddPropertyPopupPanel/VBoxContainer"]
 layout_mode = 2
 
-[node name="AddButton" type="Button" parent="Tree/AddPropertyPopupPanel/VBoxContainer/HBoxContainer"]
+[node name="AddButton" type="Button" parent="InstructionGui/AddPropertyPopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Add"
 
-[node name="CancelButton" type="Button" parent="Tree/AddPropertyPopupPanel/VBoxContainer/HBoxContainer"]
+[node name="CancelButton" type="Button" parent="InstructionGui/AddPropertyPopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Cancel"
 
-[node name="EditPropertyPopupPanel" type="PopupPanel" parent="Tree"]
+[node name="EditPropertyPopupPanel" type="PopupPanel" parent="InstructionGui"]
 title = "Edit Property"
 position = Vector2i(470, 250)
 size = Vector2i(320, 80)
 borderless = false
 script = ExtResource("6_o3sou")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Tree/EditPropertyPopupPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="InstructionGui/EditPropertyPopupPanel"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -84,32 +85,32 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PropertyNameField" type="LineEdit" parent="Tree/EditPropertyPopupPanel/VBoxContainer"]
+[node name="PropertyNameField" type="LineEdit" parent="InstructionGui/EditPropertyPopupPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 placeholder_text = "property name..."
 select_all_on_focus = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Tree/EditPropertyPopupPanel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="InstructionGui/EditPropertyPopupPanel/VBoxContainer"]
 layout_mode = 2
 
-[node name="EditButton" type="Button" parent="Tree/EditPropertyPopupPanel/VBoxContainer/HBoxContainer"]
+[node name="EditButton" type="Button" parent="InstructionGui/EditPropertyPopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Accept"
 
-[node name="CancelButton" type="Button" parent="Tree/EditPropertyPopupPanel/VBoxContainer/HBoxContainer"]
+[node name="CancelButton" type="Button" parent="InstructionGui/EditPropertyPopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Cancel"
 
-[node name="DeletePropertyPopupPanel" type="PopupPanel" parent="Tree"]
+[node name="DeletePropertyPopupPanel" type="PopupPanel" parent="InstructionGui"]
 title = "Delete Property?"
 position = Vector2i(470, 250)
 size = Vector2i(320, 80)
 borderless = false
 script = ExtResource("6_oqswt")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Tree/DeletePropertyPopupPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="InstructionGui/DeletePropertyPopupPanel"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -120,31 +121,31 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PropertyNameField" type="LineEdit" parent="Tree/DeletePropertyPopupPanel/VBoxContainer"]
+[node name="PropertyNameField" type="LineEdit" parent="InstructionGui/DeletePropertyPopupPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 editable = false
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Tree/DeletePropertyPopupPanel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="InstructionGui/DeletePropertyPopupPanel/VBoxContainer"]
 layout_mode = 2
 
-[node name="DeleteButton" type="Button" parent="Tree/DeletePropertyPopupPanel/VBoxContainer/HBoxContainer"]
+[node name="DeleteButton" type="Button" parent="InstructionGui/DeletePropertyPopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Delete"
 
-[node name="CancelButton" type="Button" parent="Tree/DeletePropertyPopupPanel/VBoxContainer/HBoxContainer"]
+[node name="CancelButton" type="Button" parent="InstructionGui/DeletePropertyPopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Cancel"
 
-[node name="AddVariablePopupPanel" type="PopupPanel" parent="Tree"]
+[node name="AddVariablePopupPanel" type="PopupPanel" parent="InstructionGui"]
 title = "Add Variable"
 position = Vector2i(470, 250)
 size = Vector2i(320, 80)
 borderless = false
 script = ExtResource("8_ailvr")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Tree/AddVariablePopupPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="InstructionGui/AddVariablePopupPanel"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -155,31 +156,31 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VariableNameField" type="LineEdit" parent="Tree/AddVariablePopupPanel/VBoxContainer"]
+[node name="VariableNameField" type="LineEdit" parent="InstructionGui/AddVariablePopupPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 placeholder_text = "variable name..."
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Tree/AddVariablePopupPanel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="InstructionGui/AddVariablePopupPanel/VBoxContainer"]
 layout_mode = 2
 
-[node name="AddButton" type="Button" parent="Tree/AddVariablePopupPanel/VBoxContainer/HBoxContainer"]
+[node name="AddButton" type="Button" parent="InstructionGui/AddVariablePopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Add"
 
-[node name="CancelButton" type="Button" parent="Tree/AddVariablePopupPanel/VBoxContainer/HBoxContainer"]
+[node name="CancelButton" type="Button" parent="InstructionGui/AddVariablePopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Cancel"
 
-[node name="EditVariablePopupPanel" type="PopupPanel" parent="Tree"]
+[node name="EditVariablePopupPanel" type="PopupPanel" parent="InstructionGui"]
 title = "Edit Variable"
 position = Vector2i(470, 250)
 size = Vector2i(320, 80)
 borderless = false
 script = ExtResource("9_qagqt")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Tree/EditVariablePopupPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="InstructionGui/EditVariablePopupPanel"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -190,32 +191,32 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VariableNameField" type="LineEdit" parent="Tree/EditVariablePopupPanel/VBoxContainer"]
+[node name="VariableNameField" type="LineEdit" parent="InstructionGui/EditVariablePopupPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 placeholder_text = "variable name..."
 select_all_on_focus = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Tree/EditVariablePopupPanel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="InstructionGui/EditVariablePopupPanel/VBoxContainer"]
 layout_mode = 2
 
-[node name="EditButton" type="Button" parent="Tree/EditVariablePopupPanel/VBoxContainer/HBoxContainer"]
+[node name="EditButton" type="Button" parent="InstructionGui/EditVariablePopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Accept"
 
-[node name="CancelButton" type="Button" parent="Tree/EditVariablePopupPanel/VBoxContainer/HBoxContainer"]
+[node name="CancelButton" type="Button" parent="InstructionGui/EditVariablePopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Cancel"
 
-[node name="DeleteVariablePopupPanel" type="PopupPanel" parent="Tree"]
+[node name="DeleteVariablePopupPanel" type="PopupPanel" parent="InstructionGui"]
 title = "Delete Variable?"
 position = Vector2i(470, 250)
 size = Vector2i(320, 80)
 borderless = false
 script = ExtResource("10_u5s4t")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Tree/DeleteVariablePopupPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="InstructionGui/DeleteVariablePopupPanel"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -226,31 +227,31 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VariableNameField" type="LineEdit" parent="Tree/DeleteVariablePopupPanel/VBoxContainer"]
+[node name="VariableNameField" type="LineEdit" parent="InstructionGui/DeleteVariablePopupPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 editable = false
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Tree/DeleteVariablePopupPanel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="InstructionGui/DeleteVariablePopupPanel/VBoxContainer"]
 layout_mode = 2
 
-[node name="DeleteButton" type="Button" parent="Tree/DeleteVariablePopupPanel/VBoxContainer/HBoxContainer"]
+[node name="DeleteButton" type="Button" parent="InstructionGui/DeleteVariablePopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Delete"
 
-[node name="CancelButton" type="Button" parent="Tree/DeleteVariablePopupPanel/VBoxContainer/HBoxContainer"]
+[node name="CancelButton" type="Button" parent="InstructionGui/DeleteVariablePopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Cancel"
 
-[node name="AddStatePopupPanel" type="PopupPanel" parent="Tree"]
+[node name="AddStatePopupPanel" type="PopupPanel" parent="InstructionGui"]
 title = "Add State"
 position = Vector2i(470, 250)
 size = Vector2i(320, 80)
 borderless = false
 script = ExtResource("11_iwirm")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Tree/AddStatePopupPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="InstructionGui/AddStatePopupPanel"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -261,31 +262,31 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="StateNameField" type="LineEdit" parent="Tree/AddStatePopupPanel/VBoxContainer"]
+[node name="StateNameField" type="LineEdit" parent="InstructionGui/AddStatePopupPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 placeholder_text = "state name..."
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Tree/AddStatePopupPanel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="InstructionGui/AddStatePopupPanel/VBoxContainer"]
 layout_mode = 2
 
-[node name="AddButton" type="Button" parent="Tree/AddStatePopupPanel/VBoxContainer/HBoxContainer"]
+[node name="AddButton" type="Button" parent="InstructionGui/AddStatePopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Add"
 
-[node name="CancelButton" type="Button" parent="Tree/AddStatePopupPanel/VBoxContainer/HBoxContainer"]
+[node name="CancelButton" type="Button" parent="InstructionGui/AddStatePopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Cancel"
 
-[node name="EditStatePopupPanel" type="PopupPanel" parent="Tree"]
+[node name="EditStatePopupPanel" type="PopupPanel" parent="InstructionGui"]
 title = "Edit State"
 position = Vector2i(470, 250)
 size = Vector2i(320, 80)
 borderless = false
 script = ExtResource("12_icmds")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Tree/EditStatePopupPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="InstructionGui/EditStatePopupPanel"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -296,32 +297,32 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="StateNameField" type="LineEdit" parent="Tree/EditStatePopupPanel/VBoxContainer"]
+[node name="StateNameField" type="LineEdit" parent="InstructionGui/EditStatePopupPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 placeholder_text = "state name..."
 select_all_on_focus = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Tree/EditStatePopupPanel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="InstructionGui/EditStatePopupPanel/VBoxContainer"]
 layout_mode = 2
 
-[node name="EditButton" type="Button" parent="Tree/EditStatePopupPanel/VBoxContainer/HBoxContainer"]
+[node name="EditButton" type="Button" parent="InstructionGui/EditStatePopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Accept"
 
-[node name="CancelButton" type="Button" parent="Tree/EditStatePopupPanel/VBoxContainer/HBoxContainer"]
+[node name="CancelButton" type="Button" parent="InstructionGui/EditStatePopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Cancel"
 
-[node name="DeleteStatePopupPanel" type="PopupPanel" parent="Tree"]
+[node name="DeleteStatePopupPanel" type="PopupPanel" parent="InstructionGui"]
 title = "Delete State?"
 position = Vector2i(470, 250)
 size = Vector2i(320, 80)
 borderless = false
 script = ExtResource("13_fv0gp")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Tree/DeleteStatePopupPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="InstructionGui/DeleteStatePopupPanel"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -332,48 +333,145 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="StateNameField" type="LineEdit" parent="Tree/DeleteStatePopupPanel/VBoxContainer"]
+[node name="StateNameField" type="LineEdit" parent="InstructionGui/DeleteStatePopupPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 editable = false
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Tree/DeleteStatePopupPanel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="InstructionGui/DeleteStatePopupPanel/VBoxContainer"]
 layout_mode = 2
 
-[node name="DeleteButton" type="Button" parent="Tree/DeleteStatePopupPanel/VBoxContainer/HBoxContainer"]
+[node name="DeleteButton" type="Button" parent="InstructionGui/DeleteStatePopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Delete"
 
-[node name="CancelButton" type="Button" parent="Tree/DeleteStatePopupPanel/VBoxContainer/HBoxContainer"]
+[node name="CancelButton" type="Button" parent="InstructionGui/DeleteStatePopupPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Cancel"
 
-[connection signal="button_clicked" from="Tree" to="Tree" method="_on_button_clicked"]
-[connection signal="add_property" from="Tree/AddPropertyPopupPanel" to="Tree" method="_on_add_property_popup_panel_add_property"]
-[connection signal="pressed" from="Tree/AddPropertyPopupPanel/VBoxContainer/HBoxContainer/AddButton" to="Tree/AddPropertyPopupPanel" method="_on_add_button_pressed"]
-[connection signal="pressed" from="Tree/AddPropertyPopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/AddPropertyPopupPanel" method="_on_cancel_button_pressed"]
-[connection signal="edit_property" from="Tree/EditPropertyPopupPanel" to="Tree" method="_on_edit_property_popup_panel_edit_property"]
-[connection signal="pressed" from="Tree/EditPropertyPopupPanel/VBoxContainer/HBoxContainer/EditButton" to="Tree/EditPropertyPopupPanel" method="_on_edit_button_pressed"]
-[connection signal="pressed" from="Tree/EditPropertyPopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/EditPropertyPopupPanel" method="_on_cancel_button_pressed"]
-[connection signal="delete_property" from="Tree/DeletePropertyPopupPanel" to="Tree" method="_on_delete_property_popup_panel_delete_property"]
-[connection signal="pressed" from="Tree/DeletePropertyPopupPanel/VBoxContainer/HBoxContainer/DeleteButton" to="Tree/DeletePropertyPopupPanel" method="_on_delete_button_pressed"]
-[connection signal="pressed" from="Tree/DeletePropertyPopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/DeletePropertyPopupPanel" method="_on_cancel_button_pressed"]
-[connection signal="add_variable" from="Tree/AddVariablePopupPanel" to="Tree" method="_on_add_variable_popup_panel_add_variable"]
-[connection signal="pressed" from="Tree/AddVariablePopupPanel/VBoxContainer/HBoxContainer/AddButton" to="Tree/AddVariablePopupPanel" method="_on_add_button_pressed"]
-[connection signal="pressed" from="Tree/AddVariablePopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/AddVariablePopupPanel" method="_on_cancel_button_pressed"]
-[connection signal="edit_variable" from="Tree/EditVariablePopupPanel" to="Tree" method="_on_edit_variable_popup_panel_edit_variable"]
-[connection signal="pressed" from="Tree/EditVariablePopupPanel/VBoxContainer/HBoxContainer/EditButton" to="Tree/EditVariablePopupPanel" method="_on_edit_button_pressed"]
-[connection signal="pressed" from="Tree/EditVariablePopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/EditVariablePopupPanel" method="_on_cancel_button_pressed"]
-[connection signal="delete_variable" from="Tree/DeleteVariablePopupPanel" to="Tree" method="_on_delete_variable_popup_panel_delete_variable"]
-[connection signal="pressed" from="Tree/DeleteVariablePopupPanel/VBoxContainer/HBoxContainer/DeleteButton" to="Tree/DeleteVariablePopupPanel" method="_on_delete_button_pressed"]
-[connection signal="pressed" from="Tree/DeleteVariablePopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/DeleteVariablePopupPanel" method="_on_cancel_button_pressed"]
-[connection signal="add_state" from="Tree/AddStatePopupPanel" to="Tree" method="_on_add_state_popup_panel_add_state"]
-[connection signal="pressed" from="Tree/AddStatePopupPanel/VBoxContainer/HBoxContainer/AddButton" to="Tree/AddStatePopupPanel" method="_on_add_button_pressed"]
-[connection signal="pressed" from="Tree/AddStatePopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/AddStatePopupPanel" method="_on_cancel_button_pressed"]
-[connection signal="edit_state" from="Tree/EditStatePopupPanel" to="Tree" method="_on_edit_state_popup_panel_edit_state"]
-[connection signal="pressed" from="Tree/EditStatePopupPanel/VBoxContainer/HBoxContainer/EditButton" to="Tree/EditStatePopupPanel" method="_on_edit_button_pressed"]
-[connection signal="pressed" from="Tree/EditStatePopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/EditStatePopupPanel" method="_on_cancel_button_pressed"]
-[connection signal="delete_state" from="Tree/DeleteStatePopupPanel" to="Tree" method="_on_delete_state_popup_panel_delete_state"]
-[connection signal="pressed" from="Tree/DeleteStatePopupPanel/VBoxContainer/HBoxContainer/DeleteButton" to="Tree/DeleteStatePopupPanel" method="_on_delete_button_pressed"]
-[connection signal="pressed" from="Tree/DeleteStatePopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="Tree/DeleteStatePopupPanel" method="_on_cancel_button_pressed"]
+[node name="AddActionPopupPanel" type="PopupPanel" parent="InstructionGui"]
+title = "Add Action to State"
+position = Vector2i(470, 250)
+size = Vector2i(320, 200)
+visible = true
+borderless = false
+script = ExtResource("14_j4qwy")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="InstructionGui/AddActionPopupPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="MenuButton" type="MenuButton" parent="InstructionGui/AddActionPopupPanel/VBoxContainer"]
+layout_mode = 2
+text = "action type..."
+flat = false
+item_count = 4
+popup/item_0/text = "Assignment"
+popup/item_0/checked = true
+popup/item_0/id = 0
+popup/item_1/text = "Travel"
+popup/item_1/id = 1
+popup/item_2/text = "Stop"
+popup/item_2/id = 2
+popup/item_3/text = "Perform"
+popup/item_3/id = 3
+
+[node name="Assignment" type="PanelContainer" parent="InstructionGui/AddActionPopupPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VariableNameContainer" type="HBoxContainer" parent="InstructionGui/AddActionPopupPanel/VBoxContainer/Assignment"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="InstructionGui/AddActionPopupPanel/VBoxContainer/Assignment/VariableNameContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Assign:"
+
+[node name="ActionNameField" type="LineEdit" parent="InstructionGui/AddActionPopupPanel/VBoxContainer/Assignment/VariableNameContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "state name..."
+
+[node name="FunctionNameContainer" type="HBoxContainer" parent="InstructionGui/AddActionPopupPanel/VBoxContainer/Assignment"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Label" type="Label" parent="InstructionGui/AddActionPopupPanel/VBoxContainer/Assignment/FunctionNameContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Function:"
+
+[node name="FunctionNameField" type="LineEdit" parent="InstructionGui/AddActionPopupPanel/VBoxContainer/Assignment/FunctionNameContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "state name..."
+
+[node name="Travel" type="Control" parent="InstructionGui/AddActionPopupPanel/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Stop" type="Control" parent="InstructionGui/AddActionPopupPanel/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Perform" type="Control" parent="InstructionGui/AddActionPopupPanel/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="InstructionGui/AddActionPopupPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="AddButton" type="Button" parent="InstructionGui/AddActionPopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Add"
+
+[node name="CancelButton" type="Button" parent="InstructionGui/AddActionPopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
+[connection signal="button_clicked" from="InstructionGui" to="InstructionGui" method="_on_button_clicked"]
+[connection signal="add_property" from="InstructionGui/AddPropertyPopupPanel" to="InstructionGui" method="_on_add_property_popup_panel_add_property"]
+[connection signal="pressed" from="InstructionGui/AddPropertyPopupPanel/VBoxContainer/HBoxContainer/AddButton" to="InstructionGui/AddPropertyPopupPanel" method="_on_add_button_pressed"]
+[connection signal="pressed" from="InstructionGui/AddPropertyPopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="InstructionGui/AddPropertyPopupPanel" method="_on_cancel_button_pressed"]
+[connection signal="edit_property" from="InstructionGui/EditPropertyPopupPanel" to="InstructionGui" method="_on_edit_property_popup_panel_edit_property"]
+[connection signal="pressed" from="InstructionGui/EditPropertyPopupPanel/VBoxContainer/HBoxContainer/EditButton" to="InstructionGui/EditPropertyPopupPanel" method="_on_edit_button_pressed"]
+[connection signal="pressed" from="InstructionGui/EditPropertyPopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="InstructionGui/EditPropertyPopupPanel" method="_on_cancel_button_pressed"]
+[connection signal="delete_property" from="InstructionGui/DeletePropertyPopupPanel" to="InstructionGui" method="_on_delete_property_popup_panel_delete_property"]
+[connection signal="pressed" from="InstructionGui/DeletePropertyPopupPanel/VBoxContainer/HBoxContainer/DeleteButton" to="InstructionGui/DeletePropertyPopupPanel" method="_on_delete_button_pressed"]
+[connection signal="pressed" from="InstructionGui/DeletePropertyPopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="InstructionGui/DeletePropertyPopupPanel" method="_on_cancel_button_pressed"]
+[connection signal="add_variable" from="InstructionGui/AddVariablePopupPanel" to="InstructionGui" method="_on_add_variable_popup_panel_add_variable"]
+[connection signal="pressed" from="InstructionGui/AddVariablePopupPanel/VBoxContainer/HBoxContainer/AddButton" to="InstructionGui/AddVariablePopupPanel" method="_on_add_button_pressed"]
+[connection signal="pressed" from="InstructionGui/AddVariablePopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="InstructionGui/AddVariablePopupPanel" method="_on_cancel_button_pressed"]
+[connection signal="edit_variable" from="InstructionGui/EditVariablePopupPanel" to="InstructionGui" method="_on_edit_variable_popup_panel_edit_variable"]
+[connection signal="pressed" from="InstructionGui/EditVariablePopupPanel/VBoxContainer/HBoxContainer/EditButton" to="InstructionGui/EditVariablePopupPanel" method="_on_edit_button_pressed"]
+[connection signal="pressed" from="InstructionGui/EditVariablePopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="InstructionGui/EditVariablePopupPanel" method="_on_cancel_button_pressed"]
+[connection signal="delete_variable" from="InstructionGui/DeleteVariablePopupPanel" to="InstructionGui" method="_on_delete_variable_popup_panel_delete_variable"]
+[connection signal="pressed" from="InstructionGui/DeleteVariablePopupPanel/VBoxContainer/HBoxContainer/DeleteButton" to="InstructionGui/DeleteVariablePopupPanel" method="_on_delete_button_pressed"]
+[connection signal="pressed" from="InstructionGui/DeleteVariablePopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="InstructionGui/DeleteVariablePopupPanel" method="_on_cancel_button_pressed"]
+[connection signal="add_state" from="InstructionGui/AddStatePopupPanel" to="InstructionGui" method="_on_add_state_popup_panel_add_state"]
+[connection signal="pressed" from="InstructionGui/AddStatePopupPanel/VBoxContainer/HBoxContainer/AddButton" to="InstructionGui/AddStatePopupPanel" method="_on_add_button_pressed"]
+[connection signal="pressed" from="InstructionGui/AddStatePopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="InstructionGui/AddStatePopupPanel" method="_on_cancel_button_pressed"]
+[connection signal="edit_state" from="InstructionGui/EditStatePopupPanel" to="InstructionGui" method="_on_edit_state_popup_panel_edit_state"]
+[connection signal="pressed" from="InstructionGui/EditStatePopupPanel/VBoxContainer/HBoxContainer/EditButton" to="InstructionGui/EditStatePopupPanel" method="_on_edit_button_pressed"]
+[connection signal="pressed" from="InstructionGui/EditStatePopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="InstructionGui/EditStatePopupPanel" method="_on_cancel_button_pressed"]
+[connection signal="delete_state" from="InstructionGui/DeleteStatePopupPanel" to="InstructionGui" method="_on_delete_state_popup_panel_delete_state"]
+[connection signal="pressed" from="InstructionGui/DeleteStatePopupPanel/VBoxContainer/HBoxContainer/DeleteButton" to="InstructionGui/DeleteStatePopupPanel" method="_on_delete_button_pressed"]
+[connection signal="pressed" from="InstructionGui/DeleteStatePopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="InstructionGui/DeleteStatePopupPanel" method="_on_cancel_button_pressed"]
+[connection signal="pressed" from="InstructionGui/AddActionPopupPanel/VBoxContainer/HBoxContainer/AddButton" to="InstructionGui/AddActionPopupPanel" method="_on_add_button_pressed"]
+[connection signal="pressed" from="InstructionGui/AddActionPopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="InstructionGui/AddActionPopupPanel" method="_on_cancel_button_pressed"]
