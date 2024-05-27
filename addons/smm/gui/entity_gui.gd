@@ -114,12 +114,12 @@ func _no_variablegui_with_variable_name(variable_name: String) -> bool:
 func get_variable_name_by_treeitem(treeitem: TreeItem) -> String:
 	return _find_variablegui_by_treeitem(treeitem).variable.variable_name
 
-func add_variable(state_name: String) -> void:
-	if _no_stategui_with_state_name(state_name):
-		var new_state: AIState = AIState.new(state_name)
-		var new_state_gui: StateGui = StateGui.new(self, new_state)
-		entity.states.append(new_state)
-		state_guis.append(new_state_gui)
+func add_variable(variable_name: String) -> void:
+	if _no_variablegui_with_variable_name(variable_name):
+		var new_variable: AIVariable = AIVariable.new(variable_name)
+		var new_variable_gui: VariableGui = VariableGui.new(self, new_variable)
+		entity.variables.append(new_variable)
+		variable_guis.append(new_variable_gui)
 
 func edit_variable_by_treeitem(treeitem: TreeItem, variable_name: String) -> void:
 	if _no_variablegui_with_variable_name(variable_name):

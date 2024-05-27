@@ -1,0 +1,100 @@
+[gd_scene load_steps=2 format=3 uid="uid://di20q0iyxy2c2"]
+
+[ext_resource type="Script" path="res://addons/smm/gui/popups/add_action_popup.gd" id="1_je1h3"]
+
+[node name="AddActionPopupPanel" type="PopupPanel"]
+title = "Add Action to State"
+position = Vector2i(470, 250)
+size = Vector2i(320, 200)
+borderless = false
+script = ExtResource("1_je1h3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="MenuButton" type="MenuButton" parent="VBoxContainer"]
+layout_mode = 2
+text = "action type..."
+flat = false
+item_count = 4
+popup/item_0/text = "Assignment"
+popup/item_0/checked = true
+popup/item_0/id = 0
+popup/item_1/text = "Travel"
+popup/item_1/id = 1
+popup/item_2/text = "Stop"
+popup/item_2/id = 2
+popup/item_3/text = "Perform"
+popup/item_3/id = 3
+
+[node name="Assignment" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VariableNameContainer" type="HBoxContainer" parent="VBoxContainer/Assignment"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="VBoxContainer/Assignment/VariableNameContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Assign:"
+
+[node name="ActionNameField" type="LineEdit" parent="VBoxContainer/Assignment/VariableNameContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "state name..."
+
+[node name="FunctionNameContainer" type="HBoxContainer" parent="VBoxContainer/Assignment"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Label" type="Label" parent="VBoxContainer/Assignment/FunctionNameContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Function:"
+
+[node name="FunctionNameField" type="LineEdit" parent="VBoxContainer/Assignment/FunctionNameContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "state name..."
+
+[node name="Travel" type="Control" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Stop" type="Control" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Perform" type="Control" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="AddButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Add"
+
+[node name="CancelButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/AddButton" to="." method="_on_add_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]

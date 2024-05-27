@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bwd1qr1o7ki18"]
+
+[node name="StateMachineFileDialog" type="FileDialog"]
+title = "Create or Edit State Machine"
+position = Vector2i(50, 50)
+size = Vector2i(500, 300)
+filters = PackedStringArray("*.sm.json")
