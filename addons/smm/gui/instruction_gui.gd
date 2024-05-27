@@ -7,16 +7,22 @@ extends Tree
 
 var root: EntityGui
 
-@onready var add_property_popup_panel: PopupPanel = $AddPropertyPopupPanel
-@onready var add_variable_popup_panel: PopupPanel = $AddVariablePopupPanel
-@onready var add_state_popup_panel: PopupPanel = $AddStatePopupPanel
-@onready var add_action_popup_panel: PopupPanel = $AddActionPopupPanel
-@onready var edit_property_popup_panel: PopupPanel = $EditPropertyPopupPanel
-@onready var edit_variable_popup_panel: PopupPanel = $EditVariablePopupPanel
-@onready var edit_state_popup_panel: PopupPanel = $EditStatePopupPanel
-@onready var delete_property_popup_panel: PopupPanel = $DeletePropertyPopupPanel
-@onready var delete_variable_popup_panel: PopupPanel = $DeleteVariablePopupPanel
-@onready var delete_state_popup_panel: PopupPanel = $DeleteStatePopupPanel
+@onready var add_property_popup_panel: PopupPanel = $"../AddPropertyPopupPanel"
+@onready var add_variable_popup_panel: PopupPanel = $"../AddVariablePopupPanel"
+@onready var add_state_popup_panel: PopupPanel = $"../AddStatePopupPanel"
+@onready var add_action_popup_panel: PopupPanel = $"../AddActionPopupPanel"
+@onready var edit_property_popup_panel: PopupPanel = $"../EditPropertyPopupPanel"
+@onready var edit_variable_popup_panel: PopupPanel = $"../EditVariablePopupPanel"
+@onready var edit_state_popup_panel: PopupPanel = $"../EditStatePopupPanel"
+@onready var delete_property_popup_panel: PopupPanel = $"../DeletePropertyPopupPanel"
+@onready var delete_variable_popup_panel: PopupPanel = $"../DeleteVariablePopupPanel"
+@onready var delete_state_popup_panel: PopupPanel = $"../DeleteStatePopupPanel"
+
+@onready var file_dialog: FileDialog = $"../StateMachineFileDialog"
+@onready var file_access: AIFileAccess = AIFileAccess.new()
+
+var path: String
+var entity: AIEntity
 
 func _ready() -> void:
 	set_column_expand(Column.TITLE, true)
@@ -26,16 +32,21 @@ func _ready() -> void:
 	set_column_custom_minimum_width(Column.ADD_BUTTON, plus_button_texture2d.get_width())
 	set_column_custom_minimum_width(Column.REMOVE_BUTTON, minus_button_texture2d.get_width())
 	set_column_custom_minimum_width(Column.EDIT_BUTTON, modify_button_texture2d.get_width())
+
+func _on_select_button_pressed() -> void:
+	file_dialog.show()
+
+func _on_state_machine_file_dialog_file_selected(path: String) -> void:
+	print("File Selected!: ", path)
 	
-	# Test Load
-	var file_access: AIFileAccess = AIFileAccess.new()
-	var entity: AIEntity = file_access.load_file("test_ai_entity.json")
+	if self.path == path:
+		return
+	
+	## Test Load
+	entity = file_access.load_file(path)
 	
 	hide_root = true
 	root = EntityGui.new(self, entity)
-	
-	# Save back to test file to see changes in git diff
-	file_access.save_file(entity, "test_ai_entity.json")
 
 func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_index: int) -> void:
 	match id:
@@ -75,9 +86,9 @@ func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_ind
 			print("REMOVE_TRANSISTION: ", str(item))
 		EditType.REMOVE_CONDITION:
 			print("REMOVE_CONDITION: ", str(item))
-
-func _get_random_direction() -> Vector2:
-	return Vector2.from_angle(randf_range(0, PI * 2.0))
+	
+	# Save back to file on change
+	file_access.save_file(entity, path)
 
 #region: Properties
 
