@@ -1,29 +1,40 @@
 [gd_scene load_steps=15 format=3 uid="uid://11rbq5xwc1uy"]
 
-[ext_resource type="Script" path="res://gui/instruction_gui.gd" id="1_1bwlm"]
-[ext_resource type="Texture2D" uid="uid://6tq41m622hrr" path="res://assets/buttons/Add.svg" id="2_bxein"]
-[ext_resource type="Texture2D" uid="uid://beoii7vqtt18j" path="res://assets/buttons/Remove.svg" id="3_ujpyy"]
-[ext_resource type="Texture2D" uid="uid://cl7k8ytumsj67" path="res://assets/buttons/Edit.svg" id="4_ys0e5"]
-[ext_resource type="Script" path="res://gui/popups/add_property_popup.gd" id="5_apyrb"]
-[ext_resource type="Script" path="res://gui/popups/edit_property_popup.gd" id="6_o3sou"]
-[ext_resource type="Script" path="res://gui/popups/delete_property_popup.gd" id="6_oqswt"]
-[ext_resource type="Script" path="res://gui/popups/add_variable_popup.gd" id="8_ailvr"]
-[ext_resource type="Script" path="res://gui/popups/edit_variable_popup.gd" id="9_qagqt"]
-[ext_resource type="Script" path="res://gui/popups/delete_variable_popup.gd" id="10_u5s4t"]
-[ext_resource type="Script" path="res://gui/popups/add_state_popup.gd" id="11_iwirm"]
-[ext_resource type="Script" path="res://gui/popups/edit_state_popup.gd" id="12_icmds"]
-[ext_resource type="Script" path="res://gui/popups/delete_state_popup.gd" id="13_fv0gp"]
-[ext_resource type="Script" path="res://gui/popups/add_action_popup.gd" id="14_j4qwy"]
+[ext_resource type="Script" path="res://addons/smm/gui/instruction_gui.gd" id="1_1bwlm"]
+[ext_resource type="Texture2D" uid="uid://6tq41m622hrr" path="res://addons/smm/assets/buttons/Add.svg" id="2_bxein"]
+[ext_resource type="Texture2D" uid="uid://beoii7vqtt18j" path="res://addons/smm/assets/buttons/Remove.svg" id="3_ujpyy"]
+[ext_resource type="Texture2D" uid="uid://cl7k8ytumsj67" path="res://addons/smm/assets/buttons/Edit.svg" id="4_ys0e5"]
+[ext_resource type="Script" path="res://addons/smm/gui/popups/add_property_popup.gd" id="5_apyrb"]
+[ext_resource type="Script" path="res://addons/smm/gui/popups/edit_property_popup.gd" id="6_o3sou"]
+[ext_resource type="Script" path="res://addons/smm/gui/popups/delete_property_popup.gd" id="6_oqswt"]
+[ext_resource type="Script" path="res://addons/smm/gui/popups/add_variable_popup.gd" id="8_ailvr"]
+[ext_resource type="Script" path="res://addons/smm/gui/popups/edit_variable_popup.gd" id="9_qagqt"]
+[ext_resource type="Script" path="res://addons/smm/gui/popups/delete_variable_popup.gd" id="10_u5s4t"]
+[ext_resource type="Script" path="res://addons/smm/gui/popups/add_state_popup.gd" id="11_iwirm"]
+[ext_resource type="Script" path="res://addons/smm/gui/popups/edit_state_popup.gd" id="12_icmds"]
+[ext_resource type="Script" path="res://addons/smm/gui/popups/delete_state_popup.gd" id="13_fv0gp"]
+[ext_resource type="Script" path="res://addons/smm/gui/popups/add_action_popup.gd" id="14_j4qwy"]
 
-[node name="Window" type="Window"]
-title = "Configure State Machine"
-position = Vector2i(40, 40)
-size = Vector2i(1200, 720)
-
-[node name="InstructionGui" type="Tree" parent="."]
+[node name="Control" type="Control"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_right = 166.0
+offset_bottom = 49.0
+text = "Load Machine..."
+
+[node name="InstructionGui" type="Tree" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 57.0
 grow_horizontal = 2
 grow_vertical = 2
 columns = 4
@@ -45,8 +56,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = -4.0
-offset_bottom = -4.0
+offset_right = 316.0
+offset_bottom = 76.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -80,8 +91,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = -4.0
-offset_bottom = -4.0
+offset_right = 316.0
+offset_bottom = 76.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -116,8 +127,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = -4.0
-offset_bottom = -4.0
+offset_right = 316.0
+offset_bottom = 76.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -151,8 +162,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = -4.0
-offset_bottom = -4.0
+offset_right = 316.0
+offset_bottom = 76.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -186,8 +197,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = -4.0
-offset_bottom = -4.0
+offset_right = 316.0
+offset_bottom = 76.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -222,8 +233,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = -4.0
-offset_bottom = -4.0
+offset_right = 316.0
+offset_bottom = 76.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -257,8 +268,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = -4.0
-offset_bottom = -4.0
+offset_right = 316.0
+offset_bottom = 76.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -292,8 +303,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = -4.0
-offset_bottom = -4.0
+offset_right = 316.0
+offset_bottom = 76.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -328,8 +339,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = -4.0
-offset_bottom = -4.0
+offset_right = 316.0
+offset_bottom = 76.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -354,7 +365,6 @@ text = "Cancel"
 title = "Add Action to State"
 position = Vector2i(470, 250)
 size = Vector2i(320, 200)
-visible = true
 borderless = false
 script = ExtResource("14_j4qwy")
 
@@ -364,8 +374,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = -4.0
-offset_bottom = -4.0
+offset_right = 316.0
+offset_bottom = 196.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3

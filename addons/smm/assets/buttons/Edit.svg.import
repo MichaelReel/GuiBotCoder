@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://biof6uhprfjaq"
-path="res://.godot/imported/remove_button.png-3b0437fa2d17831d56712b331ccc7b2f.ctex"
+uid="uid://cl7k8ytumsj67"
+path="res://.godot/imported/Edit.svg-c0a04b49d9e30668b5864e0d3b1b8819.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/buttons/remove_button.png"
-dest_files=["res://.godot/imported/remove_button.png-3b0437fa2d17831d56712b331ccc7b2f.ctex"]
+source_file="res://addons/smm/assets/buttons/Edit.svg"
+dest_files=["res://.godot/imported/Edit.svg-c0a04b49d9e30668b5864e0d3b1b8819.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

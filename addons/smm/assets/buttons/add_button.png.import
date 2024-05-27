@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6tq41m622hrr"
-path="res://.godot/imported/Add.svg-f258adc5c870967fd93ada15723450f1.ctex"
+uid="uid://bj12mnpcvqk81"
+path="res://.godot/imported/add_button.png-e644fa6c4d701167038f8c6b80688fd8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/buttons/Add.svg"
-dest_files=["res://.godot/imported/Add.svg-f258adc5c870967fd93ada15723450f1.ctex"]
+source_file="res://addons/smm/assets/buttons/add_button.png"
+dest_files=["res://.godot/imported/add_button.png-e644fa6c4d701167038f8c6b80688fd8.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false
