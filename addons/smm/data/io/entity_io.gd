@@ -3,9 +3,12 @@ extends RefCounted
 
 var schemas: AISchemas = AISchemas.new()
 
-func save_file(entity: AIEntity, file_path: String):
+func save_file(entity: AIEntity, file_path: String) -> void:
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
 	file.store_string(serialize_entity(entity))
+	
+func file_exists(file_path: String) -> bool:
+	return FileAccess.file_exists(file_path)
 
 func load_file(file_path: String) -> AIEntity:
 	var file = FileAccess.open(file_path, FileAccess.READ)

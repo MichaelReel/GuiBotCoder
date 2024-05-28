@@ -15,25 +15,41 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_k4dx3")
 
-[node name="SelectButton" type="Button" parent="."]
-layout_mode = 0
-offset_right = 166.0
-offset_bottom = 49.0
-text = "Select Machine..."
-
-[node name="InstructionGui" type="Tree" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 57.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="HFlowContainer" type="HFlowContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="SelectButton" type="Button" parent="VBoxContainer/HFlowContainer"]
+layout_mode = 2
+text = "Select Machine..."
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MachineList" type="ItemList" parent="VBoxContainer/HSplitContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="InstructionGui" type="Tree" parent="VBoxContainer/HSplitContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
 columns = 4
 script = ExtResource("2_ttkjf")
 plus_button_texture2d = ExtResource("3_xjg4n")
 minus_button_texture2d = ExtResource("4_pw0h2")
 modify_button_texture2d = ExtResource("5_ngkl4")
 
-[connection signal="pressed" from="SelectButton" to="InstructionGui" method="_on_select_button_pressed"]
-[connection signal="button_clicked" from="InstructionGui" to="InstructionGui" method="_on_button_clicked"]
+[connection signal="pressed" from="VBoxContainer/HFlowContainer/SelectButton" to="VBoxContainer/HSplitContainer/InstructionGui" method="_on_select_button_pressed"]
+[connection signal="item_selected" from="VBoxContainer/HSplitContainer/MachineList" to="." method="_on_machine_list_item_selected"]
+[connection signal="button_clicked" from="VBoxContainer/HSplitContainer/InstructionGui" to="VBoxContainer/HSplitContainer/InstructionGui" method="_on_button_clicked"]
+[connection signal="file_selected" from="VBoxContainer/HSplitContainer/InstructionGui" to="." method="_on_instruction_gui_file_selected"]

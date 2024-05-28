@@ -2,6 +2,8 @@
 class_name InstructionGui
 extends Tree
 
+signal file_selected(path: String)
+
 @export var plus_button_texture2d: Texture2D
 @export var minus_button_texture2d: Texture2D
 @export var modify_button_texture2d: Texture2D
@@ -22,8 +24,10 @@ var delete_variable_popup_panel: PopupPanel
 var delete_state_popup_panel: PopupPanel
 
 var file_dialog: FileDialog
-var path: String
-var entity: AIEntity
+
+var current_path: String
+var current_entity: AIEntity
+var path_entity_mapping: Dictionary = {}
 
 func _ready() -> void:
 	set_column_expand(Column.TITLE, true)
@@ -33,6 +37,7 @@ func _ready() -> void:
 	set_column_custom_minimum_width(Column.ADD_BUTTON, plus_button_texture2d.get_width())
 	set_column_custom_minimum_width(Column.REMOVE_BUTTON, minus_button_texture2d.get_width())
 	set_column_custom_minimum_width(Column.EDIT_BUTTON, modify_button_texture2d.get_width())
+	hide_root = true
 
 func set_window_signals(window_list: Dictionary) -> void:
 	# Get a first-party reference to the popups
@@ -65,17 +70,36 @@ func _on_select_button_pressed() -> void:
 	file_dialog.show()
 
 func _on_state_machine_file_dialog_file_selected(path: String) -> void:
-	print("File Selected!: ", path)
-	
-	if self.path == path:
+	# Don't change anything if we already have this file open
+	if current_path == path:
 		return
-	self.path = path
 	
-	## Test Load
-	entity = file_access.load_file(path)
+	# Check if we have a path already loaded in the disctionary
+	current_path = path
+	if current_path in path_entity_mapping:
+		current_entity = path_entity_mapping[current_path]
+	else:
+		# If the file doesn't exist, create it
+		if not file_access.file_exists(current_path):
+			file_access.save_file(AIEntity.new(current_path), current_path)
+		
+		# Load current_entity state machine
+		current_entity = file_access.load_file(current_path)
+		path_entity_mapping[current_path] = current_entity
 	
-	hide_root = true
-	root = EntityGui.new(self, entity)
+	_update_gui_to_current_entity()
+
+func load_existing_machine(path: String) -> void:
+	current_path = path
+	current_entity = path_entity_mapping[current_path]
+	
+	_update_gui_to_current_entity()
+
+func _update_gui_to_current_entity() -> void:
+	# Clear the tree and update the GUI
+	clear()
+	root = EntityGui.new(self, current_entity)
+	emit_signal("file_selected", current_path)
 
 func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_index: int) -> void:
 	match id:
@@ -120,15 +144,15 @@ func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_ind
 
 func _on_add_property_popup_panel_add_property(property_name: String) -> void:
 	root.add_property(property_name)
-	file_access.save_file(entity, path)
+	file_access.save_file(current_entity, current_path)
 
 func _on_edit_property_popup_panel_edit_property(treeitem: TreeItem, property_name: String) -> void:
 	root.edit_property_by_treeitem(treeitem, property_name)
-	file_access.save_file(entity, path)
+	file_access.save_file(current_entity, current_path)
 
 func _on_delete_property_popup_panel_delete_property(treeitem: TreeItem) -> void:
 	root.delete_property_by_treeitem(treeitem)
-	file_access.save_file(entity, path)
+	file_access.save_file(current_entity, current_path)
 
 #endregion
 
@@ -136,15 +160,15 @@ func _on_delete_property_popup_panel_delete_property(treeitem: TreeItem) -> void
 
 func _on_add_variable_popup_panel_add_variable(variable_name: String) -> void:
 	root.add_variable(variable_name)
-	file_access.save_file(entity, path)
+	file_access.save_file(current_entity, current_path)
 
 func _on_edit_variable_popup_panel_edit_variable(treeitem: TreeItem, variable_name: String) -> void:
 	root.edit_variable_by_treeitem(treeitem, variable_name)
-	file_access.save_file(entity, path)
+	file_access.save_file(current_entity, current_path)
 
 func _on_delete_variable_popup_panel_delete_variable(treeitem: TreeItem) -> void:
 	root.delete_variable_by_treeitem(treeitem)
-	file_access.save_file(entity, path)
+	file_access.save_file(current_entity, current_path)
 
 #endregion
 
@@ -152,15 +176,15 @@ func _on_delete_variable_popup_panel_delete_variable(treeitem: TreeItem) -> void
 
 func _on_add_state_popup_panel_add_state(state_name: String) -> void:
 	root.add_state(state_name)
-	file_access.save_file(entity, path)
+	file_access.save_file(current_entity, current_path)
 
 func _on_edit_state_popup_panel_edit_state(treeitem: TreeItem, state_name: String) -> void:
 	root.edit_state_by_treeitem(treeitem, state_name)
-	file_access.save_file(entity, path)
+	file_access.save_file(current_entity, current_path)
 
 func _on_delete_state_popup_panel_delete_state(treeitem: TreeItem) -> void:
 	root.delete_state_by_treeitem(treeitem)
-	file_access.save_file(entity, path)
+	file_access.save_file(current_entity, current_path)
 
 #endregion
 
