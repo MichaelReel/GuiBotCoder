@@ -1,13 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://d2mppk2kctjjg"]
+[gd_scene load_steps=2 format=3 uid="uid://c0ol0u5yhbfwq"]
 
-[ext_resource type="Script" path="res://addons/smm/gui/popups/delete_property_popup.gd" id="1_dtsfp"]
+[ext_resource type="Script" path="res://addons/smm/gui/popups/state/delete_state_popup.gd" id="1_5hyru"]
 
-[node name="DeletePropertyPopupPanel" type="PopupPanel"]
-title = "Delete Property?"
+[node name="DeleteStatePopupPanel" type="PopupPanel"]
+title = "Delete State?"
 position = Vector2i(470, 250)
 size = Vector2i(320, 80)
 borderless = false
-script = ExtResource("1_dtsfp")
+script = ExtResource("1_5hyru")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 15
@@ -20,7 +20,7 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PropertyNameField" type="LineEdit" parent="VBoxContainer"]
+[node name="StateNameField" type="LineEdit" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 editable = false

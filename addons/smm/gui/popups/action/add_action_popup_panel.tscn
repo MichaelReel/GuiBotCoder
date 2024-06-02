@@ -1,0 +1,61 @@
+[gd_scene load_steps=2 format=3 uid="uid://di20q0iyxy2c2"]
+
+[ext_resource type="Script" path="res://addons/smm/gui/popups/action/add_action_popup.gd" id="1_je1h3"]
+
+[node name="AddActionPopupPanel" type="PopupPanel"]
+title = "Add Action to State"
+position = Vector2i(525, 288)
+size = Vector2i(320, 145)
+visible = true
+borderless = false
+script = ExtResource("1_je1h3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="HFlowContainer" type="HFlowContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="AssignButton" type="Button" parent="VBoxContainer/HFlowContainer"]
+layout_mode = 2
+text = "Assignment Action..."
+
+[node name="TravelButton" type="Button" parent="VBoxContainer/HFlowContainer"]
+layout_mode = 2
+text = "Travel Action..."
+
+[node name="StopButton" type="Button" parent="VBoxContainer/HFlowContainer"]
+layout_mode = 2
+text = "Stop Action..."
+
+[node name="PerformButton" type="Button" parent="VBoxContainer/HFlowContainer"]
+layout_mode = 2
+text = "Perform Action..."
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="Panel" type="Panel" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CancelButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Cancel"
+
+[connection signal="pressed" from="VBoxContainer/HFlowContainer/AssignButton" to="." method="_on_assign_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HFlowContainer/TravelButton" to="." method="_on_travel_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HFlowContainer/StopButton" to="." method="_on_stop_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HFlowContainer/PerformButton" to="." method="_on_perform_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]

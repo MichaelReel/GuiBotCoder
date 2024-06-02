@@ -1,3 +1,4 @@
+@tool
 extends PopupPanel
 
 signal add_state(state_name: String)

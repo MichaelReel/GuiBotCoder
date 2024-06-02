@@ -1,3 +1,4 @@
+@tool
 extends PopupPanel
 
 signal edit_state(treeitem: TreeItem, state_name: String)

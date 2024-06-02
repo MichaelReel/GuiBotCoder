@@ -1,6 +1,7 @@
+@tool
 extends PopupPanel
 
-signal delete_property(treeitem: TreeItem)
+signal edit_property(treeitem: TreeItem, property_name: String)
 
 var _treeitem: TreeItem
 
@@ -9,17 +10,19 @@ var _treeitem: TreeItem
 func _ready() -> void:
 	_set_to_center()
 
-func show_delete(treeitem: TreeItem, property_name: String) -> void:
+func show_edit(treeitem: TreeItem, property_name: String) -> void:
 	_treeitem = treeitem
 	property_name_field.text = property_name
+	property_name_field.grab_focus()
 	show()
 
 func _set_to_center() -> void:
 	position = (DisplayServer.window_get_size() / 2) - (size / 2)
 
-func _on_delete_button_pressed() -> void:
-	emit_signal("delete_property", _treeitem)
+func _on_edit_button_pressed() -> void:
+	emit_signal("edit_property", _treeitem, property_name_field.text)
 	hide()
 
 func _on_cancel_button_pressed() -> void:
 	hide()
+

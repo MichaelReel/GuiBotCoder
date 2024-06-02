@@ -1,13 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://gwec60f561e8"]
+[gd_scene load_steps=2 format=3 uid="uid://bqln1n5bd3rvl"]
 
-[ext_resource type="Script" path="res://addons/smm/gui/popups/add_property_popup.gd" id="1_vd70y"]
+[ext_resource type="Script" path="res://addons/smm/gui/popups/variable/edit_variable_popup.gd" id="1_yqai0"]
 
-[node name="AddPropertyPopupPanel" type="PopupPanel"]
-title = "Add Property"
+[node name="EditVariablePopupPanel" type="PopupPanel"]
+title = "Edit Variable"
 position = Vector2i(470, 250)
 size = Vector2i(320, 80)
 borderless = false
-script = ExtResource("1_vd70y")
+script = ExtResource("1_yqai0")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 15
@@ -20,22 +20,23 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PropertyNameField" type="LineEdit" parent="VBoxContainer"]
+[node name="VariableNameField" type="LineEdit" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-placeholder_text = "property name..."
+placeholder_text = "variable name..."
+select_all_on_focus = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="AddButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="EditButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Add"
+text = "Accept"
 
 [node name="CancelButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Cancel"
 
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/AddButton" to="." method="_on_add_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/EditButton" to="." method="_on_edit_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]

@@ -1,13 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://b1nxuy31s0fd1"]
+[gd_scene load_steps=2 format=3 uid="uid://d2mppk2kctjjg"]
 
-[ext_resource type="Script" path="res://addons/smm/gui/popups/add_variable_popup.gd" id="1_di52w"]
+[ext_resource type="Script" path="res://addons/smm/gui/popups/property/delete_property_popup.gd" id="1_dtsfp"]
 
-[node name="AddVariablePopupPanel" type="PopupPanel"]
-title = "Add Variable"
+[node name="DeletePropertyPopupPanel" type="PopupPanel"]
+title = "Delete Property?"
 position = Vector2i(470, 250)
 size = Vector2i(320, 80)
 borderless = false
-script = ExtResource("1_di52w")
+script = ExtResource("1_dtsfp")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 15
@@ -20,22 +20,22 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VariableNameField" type="LineEdit" parent="VBoxContainer"]
+[node name="PropertyNameField" type="LineEdit" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-placeholder_text = "variable name..."
+editable = false
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="AddButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="DeleteButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Add"
+text = "Delete"
 
 [node name="CancelButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Cancel"
 
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/AddButton" to="." method="_on_add_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/DeleteButton" to="." method="_on_delete_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]
