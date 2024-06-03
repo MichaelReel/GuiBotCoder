@@ -19,8 +19,9 @@ func _close() -> void:
 	visible = false
 
 func _on_add_button_pressed() -> void:
-	if variable_name_field.text:
-		emit_signal("add_variable", variable_name_field.text)
+	var variable_name: String = variable_name_field.text.strip_edges()
+	if variable_name:
+		emit_signal("add_variable", variable_name)
 		variable_name_field.text = ""
 		_close()
 

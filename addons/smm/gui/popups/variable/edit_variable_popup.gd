@@ -20,8 +20,10 @@ func _set_to_center() -> void:
 	position = (DisplayServer.window_get_size() / 2) - (size / 2)
 
 func _on_edit_button_pressed() -> void:
-	emit_signal("edit_variable", _treeitem, variable_name_field.text)
-	hide()
+	var variable_name: String = variable_name_field.text.strip_edges()
+	if variable_name:
+		emit_signal("edit_variable", _treeitem, variable_name)
+		hide()
 
 func _on_cancel_button_pressed() -> void:
 	hide()

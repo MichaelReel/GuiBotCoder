@@ -9,6 +9,7 @@ extends Control
 	"add_variable_popup_panel": preload("res://addons/smm/gui/popups/variable/add_variable_popup_panel.tscn").instantiate(),
 	"add_state_popup_panel": preload("res://addons/smm/gui/popups/state/add_state_popup_panel.tscn").instantiate(),
 	"add_action_popup_panel": preload("res://addons/smm/gui/popups/action/add_action_popup_panel.tscn").instantiate(),
+	"add_action_assignment_popup_panel": preload("res://addons/smm/gui/popups/action/add_action_assignment_popup_panel.tscn").instantiate(),
 	"edit_property_popup_panel": preload("res://addons/smm/gui/popups/property/edit_property_popup_panel.tscn").instantiate(),
 	"edit_variable_popup_panel": preload("res://addons/smm/gui/popups/variable/edit_variable_popup_panel.tscn").instantiate(),
 	"edit_state_popup_panel": preload("res://addons/smm/gui/popups/state/edit_state_popup_panel.tscn").instantiate(),

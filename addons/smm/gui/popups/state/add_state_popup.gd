@@ -19,8 +19,9 @@ func _close() -> void:
 	visible = false
 
 func _on_add_button_pressed() -> void:
-	if state_name_field.text:
-		emit_signal("add_state", state_name_field.text)
+	var state_name: String = state_name_field.text.strip_edges()
+	if state_name:
+		emit_signal("add_state", state_name)
 		state_name_field.text = ""
 		_close()
 

@@ -19,8 +19,9 @@ func _close() -> void:
 	visible = false
 
 func _on_add_button_pressed() -> void:
-	if property_name_field.text:
-		emit_signal("add_property", property_name_field.text)
+	var propery_name: String = property_name_field.text.strip_edges()
+	if propery_name:
+		emit_signal("add_property", propery_name)
 		property_name_field.text = ""
 		_close()
 

@@ -16,6 +16,7 @@ var add_property_popup_panel: PopupPanel
 var add_variable_popup_panel: PopupPanel
 var add_state_popup_panel: PopupPanel
 var add_action_popup_panel: PopupPanel
+var add_action_assignment_popup_panel: PopupPanel
 var edit_property_popup_panel: PopupPanel
 var edit_variable_popup_panel: PopupPanel
 var edit_state_popup_panel: PopupPanel
@@ -45,6 +46,7 @@ func set_window_signals(window_list: Dictionary) -> void:
 	add_variable_popup_panel = window_list["add_variable_popup_panel"]
 	add_state_popup_panel = window_list["add_state_popup_panel"]
 	add_action_popup_panel = window_list["add_action_popup_panel"]
+	add_action_assignment_popup_panel = window_list["add_action_assignment_popup_panel"]
 	edit_property_popup_panel = window_list["edit_property_popup_panel"]
 	edit_variable_popup_panel = window_list["edit_variable_popup_panel"]
 	edit_state_popup_panel = window_list["edit_state_popup_panel"]
@@ -57,7 +59,11 @@ func set_window_signals(window_list: Dictionary) -> void:
 	add_property_popup_panel.connect("add_property", self._on_add_property_popup_panel_add_property)
 	add_variable_popup_panel.connect("add_variable", self._on_add_variable_popup_panel_add_variable)
 	add_state_popup_panel.connect("add_state", self._on_add_state_popup_panel_add_state)
-	#add_action_popup_panel.connect("add_action", self._on_add_action_popup_panel_add_action)
+	add_action_popup_panel.connect("assign_selected", self._on_add_action_popup_panel_assign_selected)
+	add_action_popup_panel.connect("travel_selected", self._on_add_action_popup_panel_travel_selected)
+	add_action_popup_panel.connect("stop_selected", self._on_add_action_popup_panel_stop_selected)
+	add_action_popup_panel.connect("perform_selected", self._on_add_action_popup_panel_perform_selected)
+	add_action_assignment_popup_panel.connect("add_assignment", self._on_add_action_assignment_popup_panel_add_assignment)
 	edit_property_popup_panel.connect("edit_property", self._on_edit_property_popup_panel_edit_property)
 	edit_variable_popup_panel.connect("edit_variable", self._on_edit_variable_popup_panel_edit_variable)
 	edit_state_popup_panel.connect("edit_state", self._on_edit_state_popup_panel_edit_state)
@@ -189,5 +195,29 @@ func _on_delete_state_popup_panel_delete_state(treeitem: TreeItem) -> void:
 #endregion
 
 #region: Actions
+
+func _on_add_action_popup_panel_assign_selected() -> void:
+	print("_on_add_action_popup_panel_assign_selected called")
+	var argument_list: Array[String] = ["Property 1", "Prop 2", "Var 1", "Var 2"]
+	add_action_assignment_popup_panel.show_add(argument_list) 
+	pass
+
+func _on_add_action_popup_panel_travel_selected() -> void:
+	print("_on_add_action_popup_panel_travel_selected called")
+	pass
+
+func _on_add_action_popup_panel_stop_selected() -> void:
+	print("_on_add_action_popup_panel_stop_selected called")
+	pass
+
+func _on_add_action_popup_panel_perform_selected() -> void:
+	print("_on_add_action_popup_panel_perform_selected called")
+	pass
+
+func _on_add_action_assignment_popup_panel_add_assignment(
+	variable_name: String, function_name: String, argument_names: Array[String]
+) -> void:
+	print("_on_add_action_assignment_popup_panel_add_assignment(", variable_name, ",", function_name, ",", argument_names, ")")
+	
 
 #endregion
