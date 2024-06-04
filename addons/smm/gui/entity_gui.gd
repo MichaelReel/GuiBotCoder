@@ -45,6 +45,9 @@ func update() -> void:
 
 #region: Properties
 
+func get_property_names() -> Array[String]:
+	return entity.get_property_names()
+
 func _setup_properties_section(root: TreeItem) -> TreeItem:
 	var properties: TreeItem = instruction_gui.create_item(root)
 	properties.set_text(Column.TITLE, "Entity Properties")
@@ -90,6 +93,9 @@ func delete_property_by_treeitem(treeitem: TreeItem) -> void:
 #endregion
 
 #region: Variables
+
+func get_variable_names() -> Array[String]:
+	return entity.get_variable_names()
 
 func _setup_variables_section(root: TreeItem) -> TreeItem:
 	var variables: TreeItem = instruction_gui.create_item(root)
@@ -143,7 +149,7 @@ func _setup_states_section(root: TreeItem) -> TreeItem:
 	states.add_button(Column.ADD_BUTTON, instruction_gui.plus_button_texture2d, EditType.ADD_STATE, false, "Add State")
 	return states
 
-func _find_stategui_by_treeitem(treeitem: TreeItem) -> StateGui:
+func find_stategui_by_treeitem(treeitem: TreeItem) -> StateGui:
 	# Hopefully there are not too many properties
 	var state_gui: StateGui = state_guis.filter(
 		func(st_gui: StateGui): return st_gui.treeitem == treeitem
@@ -158,7 +164,7 @@ func _no_stategui_with_state_name(state_name: String) -> bool:
 	return states.is_empty()
 
 func get_state_name_by_treeitem(treeitem: TreeItem) -> String:
-	return _find_stategui_by_treeitem(treeitem).state.state_name
+	return find_stategui_by_treeitem(treeitem).state.state_name
 
 func add_state(state_name: String) -> void:
 	if _no_stategui_with_state_name(state_name):
@@ -169,14 +175,24 @@ func add_state(state_name: String) -> void:
 	
 func edit_state_by_treeitem(treeitem: TreeItem, state_name: String) -> void:
 	if _no_stategui_with_state_name(state_name):
-		var state_gui: StateGui = _find_stategui_by_treeitem(treeitem)
+		var state_gui: StateGui = find_stategui_by_treeitem(treeitem)
 		state_gui.state.state_name = state_name
 		state_gui.treeitem.set_text(Column.TITLE, state_name)
 
 func delete_state_by_treeitem(treeitem: TreeItem) -> void:
-	var state_gui: StateGui = _find_stategui_by_treeitem(treeitem)
+	var state_gui: StateGui = find_stategui_by_treeitem(treeitem)
 	states_treeitem.remove_child(state_gui.treeitem)
 	entity.states.erase(state_gui.state)
 	state_guis.erase(state_gui)
+
+#endregion
+
+#region actions
+
+func add_assignment_to_state(state_gui: StateGui, variable_name: String, function_name: String, argument_names: Array[String]) -> void:
+	var new_action: AIAction = AIAction.AIAssignment.new(variable_name, function_name, argument_names)
+	var new_action_gui: ActionGui = ActionGui.get_gui_for_action(state_gui, new_action)
+	state_gui.state.actions.append(new_action)
+	state_gui.actions_guis.append(new_action_gui)
 
 #endregion

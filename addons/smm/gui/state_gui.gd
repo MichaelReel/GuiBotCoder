@@ -49,6 +49,9 @@ func update() -> void:
 	for transition in state.transistions:
 		transistions_guis.append(TransitionGui.new(self, transition))
 
+func get_assigned_variable_names() -> Array[String]:
+	return state.get_assigned_variable_names()
+
 func _setup_actions_section() -> TreeItem:
 	var actions: TreeItem = entity_gui.treeitem.get_tree().create_item(treeitem)
 	actions.set_text(Column.TITLE, "State Actions")

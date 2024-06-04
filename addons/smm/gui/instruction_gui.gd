@@ -116,7 +116,7 @@ func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_ind
 		EditType.ADD_STATE:
 			add_state_popup_panel.show_add()
 		EditType.ADD_ACTION:
-			add_action_popup_panel.show_add()
+			add_action_popup_panel.show_add(item, root.find_stategui_by_treeitem(item.get_parent()))
 		EditType.ADD_TRANSISTION:
 			print("ADD_TRANSISTION: ", str(item))
 		EditType.ADD_CONDITION:
@@ -196,28 +196,29 @@ func _on_delete_state_popup_panel_delete_state(treeitem: TreeItem) -> void:
 
 #region: Actions
 
-func _on_add_action_popup_panel_assign_selected() -> void:
-	print("_on_add_action_popup_panel_assign_selected called")
-	var argument_list: Array[String] = ["Property 1", "Prop 2", "Var 1", "Var 2"]
-	add_action_assignment_popup_panel.show_add(argument_list) 
-	pass
+func _on_add_action_popup_panel_assign_selected(item: TreeItem, state_gui: StateGui) -> void:
+	var argument_list: Array[String] = []
+	argument_list.append_array(root.get_property_names())
+	argument_list.append_array(root.get_variable_names())
+	argument_list.append_array(state_gui.get_assigned_variable_names())
+	add_action_assignment_popup_panel.show_add(item, state_gui, argument_list)
 
-func _on_add_action_popup_panel_travel_selected() -> void:
+func _on_add_action_popup_panel_travel_selected(item: TreeItem, state_gui: StateGui) -> void:
 	print("_on_add_action_popup_panel_travel_selected called")
 	pass
 
-func _on_add_action_popup_panel_stop_selected() -> void:
+func _on_add_action_popup_panel_stop_selected(item: TreeItem, state_gui: StateGui) -> void:
 	print("_on_add_action_popup_panel_stop_selected called")
 	pass
 
-func _on_add_action_popup_panel_perform_selected() -> void:
+func _on_add_action_popup_panel_perform_selected(item: TreeItem, state_gui: StateGui) -> void:
 	print("_on_add_action_popup_panel_perform_selected called")
 	pass
 
 func _on_add_action_assignment_popup_panel_add_assignment(
-	variable_name: String, function_name: String, argument_names: Array[String]
+	item: TreeItem, state_gui: StateGui, variable_name: String, function_name: String, argument_names: Array[String]
 ) -> void:
-	print("_on_add_action_assignment_popup_panel_add_assignment(", variable_name, ",", function_name, ",", argument_names, ")")
-	
+	root.add_assignment_to_state(state_gui, variable_name, function_name, argument_names)
+	# TODO: file_access.save_file(current_entity, current_path)
 
 #endregion
