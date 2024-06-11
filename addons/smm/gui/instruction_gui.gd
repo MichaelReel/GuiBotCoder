@@ -17,6 +17,7 @@ var add_variable_popup_panel: PopupPanel
 var add_state_popup_panel: PopupPanel
 var add_action_popup_panel: PopupPanel
 var add_action_assignment_popup_panel: PopupPanel
+var add_action_travel_popup_panel: PopupPanel
 var edit_property_popup_panel: PopupPanel
 var edit_variable_popup_panel: PopupPanel
 var edit_state_popup_panel: PopupPanel
@@ -47,6 +48,7 @@ func set_window_signals(window_list: Dictionary) -> void:
 	add_state_popup_panel = window_list["add_state_popup_panel"]
 	add_action_popup_panel = window_list["add_action_popup_panel"]
 	add_action_assignment_popup_panel = window_list["add_action_assignment_popup_panel"]
+	add_action_travel_popup_panel = window_list["add_action_travel_popup_panel"]
 	edit_property_popup_panel = window_list["edit_property_popup_panel"]
 	edit_variable_popup_panel = window_list["edit_variable_popup_panel"]
 	edit_state_popup_panel = window_list["edit_state_popup_panel"]
@@ -64,6 +66,7 @@ func set_window_signals(window_list: Dictionary) -> void:
 	add_action_popup_panel.connect("stop_selected", self._on_add_action_popup_panel_stop_selected)
 	add_action_popup_panel.connect("perform_selected", self._on_add_action_popup_panel_perform_selected)
 	add_action_assignment_popup_panel.connect("add_assignment", self._on_add_action_assignment_popup_panel_add_assignment)
+	add_action_travel_popup_panel.connect("add_travel", self._on_add_action_travel_popup_panel_add_travel)
 	edit_property_popup_panel.connect("edit_property", self._on_edit_property_popup_panel_edit_property)
 	edit_variable_popup_panel.connect("edit_variable", self._on_edit_variable_popup_panel_edit_variable)
 	edit_state_popup_panel.connect("edit_state", self._on_edit_state_popup_panel_edit_state)
@@ -204,8 +207,11 @@ func _on_add_action_popup_panel_assign_selected(item: TreeItem, state_gui: State
 	add_action_assignment_popup_panel.show_add(item, state_gui, argument_list)
 
 func _on_add_action_popup_panel_travel_selected(item: TreeItem, state_gui: StateGui) -> void:
-	print("_on_add_action_popup_panel_travel_selected called")
-	pass
+	var argument_list: Array[String] = []
+	argument_list.append_array(root.get_property_names())
+	argument_list.append_array(root.get_variable_names())
+	argument_list.append_array(state_gui.get_assigned_variable_names())
+	add_action_travel_popup_panel.show_add(item, state_gui, argument_list)
 
 func _on_add_action_popup_panel_stop_selected(item: TreeItem, state_gui: StateGui) -> void:
 	print("_on_add_action_popup_panel_stop_selected called")
@@ -219,6 +225,12 @@ func _on_add_action_assignment_popup_panel_add_assignment(
 	item: TreeItem, state_gui: StateGui, variable_name: String, function_name: String, argument_names: Array[String]
 ) -> void:
 	root.add_assignment_to_state(state_gui, variable_name, function_name, argument_names)
+	# TODO: file_access.save_file(current_entity, current_path)
+
+func _on_add_action_travel_popup_panel_add_travel(
+	item: TreeItem, state_gui: StateGui, direction_variable_name: String, distance_variable_name: String
+) -> void:
+	root.add_travel_to_state(state_gui, direction_variable_name, distance_variable_name)
 	# TODO: file_access.save_file(current_entity, current_path)
 
 #endregion

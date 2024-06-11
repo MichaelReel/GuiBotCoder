@@ -1,0 +1,61 @@
+[gd_scene load_steps=2 format=3 uid="uid://cd0mfvx2xpj38"]
+
+[ext_resource type="Script" path="res://addons/smm/gui/popups/action/add_action_travel_popup_panel.gd" id="1_1cx3t"]
+
+[node name="AddActionTargetPopupPanel" type="PopupPanel"]
+title = "Add Travel"
+position = Vector2i(451, 170)
+size = Vector2i(320, 125)
+visible = true
+borderless = false
+script = ExtResource("1_1cx3t")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 316.0
+offset_bottom = 121.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+columns = 2
+
+[node name="DirectionLabel" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Direction:"
+horizontal_alignment = 2
+
+[node name="DirectionOptionButton" type="OptionButton" parent="VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DistanceLabel" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Distance:"
+horizontal_alignment = 2
+
+[node name="DistanceOptionButton" type="OptionButton" parent="VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="AddButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Add"
+
+[node name="CancelButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/AddButton" to="." method="_on_add_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]

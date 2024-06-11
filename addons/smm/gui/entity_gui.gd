@@ -195,4 +195,10 @@ func add_assignment_to_state(state_gui: StateGui, variable_name: String, functio
 	state_gui.state.actions.append(new_action)
 	state_gui.actions_guis.append(new_action_gui)
 
+func add_travel_to_state(state_gui: StateGui, direction_variable_name: String, distance_variable_name: String) -> void:
+	var new_action: AIAction = AIAction.AITravel.new(direction_variable_name, distance_variable_name)
+	var new_action_gui: ActionGui = ActionGui.get_gui_for_action(state_gui, new_action)
+	state_gui.state.actions.append(new_action)
+	state_gui.actions_guis.append(new_action_gui)
+
 #endregion
