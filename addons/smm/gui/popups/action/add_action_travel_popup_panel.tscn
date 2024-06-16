@@ -4,7 +4,7 @@
 
 [node name="AddActionTargetPopupPanel" type="PopupPanel"]
 title = "Add Travel"
-position = Vector2i(451, 170)
+position = Vector2i(1085, 626)
 size = Vector2i(320, 125)
 visible = true
 borderless = false
@@ -16,8 +16,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 316.0
-offset_bottom = 121.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 

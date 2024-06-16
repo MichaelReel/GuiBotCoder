@@ -1,14 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://br13jjyg6c1y6"]
+[gd_scene load_steps=2 format=3 uid="uid://frvtfbuxat4"]
 
-[ext_resource type="Script" path="res://addons/smm/gui/popups/action/add_action_assignment_popup_panel.gd" id="1_r7qdg"]
+[ext_resource type="Script" path="res://addons/smm/gui/popups/action/add_action_perform_popup_panel.gd" id="1_eksf0"]
 
-[node name="AddActionAssignmentPopupPanel" type="PopupPanel"]
+[node name="AddActionPerformPopupPanel" type="PopupPanel"]
 title = "Add Variable"
-position = Vector2i(1085, 578)
+position = Vector2i(446, 288)
 size = Vector2i(320, 220)
 visible = true
 borderless = false
-script = ExtResource("1_r7qdg")
+script = ExtResource("1_eksf0")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 15
@@ -26,21 +26,9 @@ layout_mode = 2
 size_flags_vertical = 2
 columns = 2
 
-[node name="VarLabel" type="Label" parent="VBoxContainer/GridContainer"]
-layout_mode = 2
-text = "Assign to:"
-horizontal_alignment = 2
-
-[node name="VariableNameField" type="LineEdit" parent="VBoxContainer/GridContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-placeholder_text = "variable name..."
-
 [node name="FunctionLabel" type="Label" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
-text = "from:"
+text = "Perform:"
 horizontal_alignment = 2
 
 [node name="FunctionNameField" type="LineEdit" parent="VBoxContainer/GridContainer"]

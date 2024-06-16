@@ -189,16 +189,25 @@ func delete_state_by_treeitem(treeitem: TreeItem) -> void:
 
 #region actions
 
-func add_assignment_to_state(state_gui: StateGui, variable_name: String, function_name: String, argument_names: Array[String]) -> void:
-	var new_action: AIAction = AIAction.AIAssignment.new(variable_name, function_name, argument_names)
+func _add_action_to_state(state_gui: StateGui, new_action: AIAction) -> void:
 	var new_action_gui: ActionGui = ActionGui.get_gui_for_action(state_gui, new_action)
 	state_gui.state.actions.append(new_action)
 	state_gui.actions_guis.append(new_action_gui)
 
+func add_assignment_to_state(state_gui: StateGui, variable_name: String, function_name: String, argument_names: Array[String]) -> void:
+	var new_action: AIAction = AIAction.AIAssignment.new(variable_name, function_name, argument_names)
+	_add_action_to_state(state_gui, new_action)
+
 func add_travel_to_state(state_gui: StateGui, direction_variable_name: String, distance_variable_name: String) -> void:
 	var new_action: AIAction = AIAction.AITravel.new(direction_variable_name, distance_variable_name)
-	var new_action_gui: ActionGui = ActionGui.get_gui_for_action(state_gui, new_action)
-	state_gui.state.actions.append(new_action)
-	state_gui.actions_guis.append(new_action_gui)
+	_add_action_to_state(state_gui, new_action)
+
+func add_stop_to_state(state_gui: StateGui) -> void:
+	var new_action: AIAction = AIAction.AIStop.new()
+	_add_action_to_state(state_gui, new_action)
+
+func add_perform_to_state(state_gui: StateGui, function_name: String, argument_names: Array[String]) -> void:
+	var new_action: AIAction = AIAction.AIPerform.new(function_name, argument_names)
+	_add_action_to_state(state_gui, new_action)
 
 #endregion
