@@ -35,12 +35,13 @@ func get_extra_windows() -> Dictionary:
 	return window_list
 
 func _on_instruction_gui_file_selected(path: String) -> void:
-	var ind: int = file_paths.bsearch(path)
+	var display_path: String = path.trim_prefix("res://").trim_suffix(".sm.json")
+	var ind: int = file_paths.bsearch(display_path)
 	
 	if ind >= len(file_paths) or file_paths[ind] != path:
 		# Insert path into 
 		file_paths.insert(ind, path)
-		machine_list.move_item(machine_list.add_item(path), ind)
+		machine_list.move_item(machine_list.add_item(display_path), ind)
 	
 	machine_list.select(ind)
 
