@@ -25,6 +25,7 @@ var edit_state_popup_panel: PopupPanel
 var delete_property_popup_panel: PopupPanel
 var delete_variable_popup_panel: PopupPanel
 var delete_state_popup_panel: PopupPanel
+var delete_action_popup_panel: PopupPanel
 
 var file_dialog: FileDialog
 
@@ -57,6 +58,7 @@ func set_window_signals(window_list: Dictionary) -> void:
 	delete_property_popup_panel = window_list["delete_property_popup_panel"]
 	delete_variable_popup_panel = window_list["delete_variable_popup_panel"]
 	delete_state_popup_panel = window_list["delete_state_popup_panel"]
+	delete_action_popup_panel = window_list["delete_action_popup_panel"]
 	file_dialog = window_list["file_dialog"]
 	
 	# Hook into the popup signals
@@ -76,6 +78,7 @@ func set_window_signals(window_list: Dictionary) -> void:
 	delete_property_popup_panel.connect("delete_property", self._on_delete_property_popup_panel_delete_property)
 	delete_variable_popup_panel.connect("delete_variable", self._on_delete_variable_popup_panel_delete_variable)
 	delete_state_popup_panel.connect("delete_state", self._on_delete_state_popup_panel_delete_state)
+	delete_action_popup_panel.connect("delete_action", self._on_delete_action_popup_panel_delete_action)
 	file_dialog.connect("file_selected", self._on_state_machine_file_dialog_file_selected)
 
 func _on_select_button_pressed() -> void:
@@ -146,7 +149,7 @@ func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_ind
 		EditType.REMOVE_STATE:
 			delete_state_popup_panel.show_delete(item, root.get_state_name_by_treeitem(item))
 		EditType.REMOVE_ACTION:
-			print("REMOVE_ACTION: ", str(item))
+			delete_action_popup_panel.show_delete(item, root.get_action_name_by_treeitem(item))
 		EditType.REMOVE_TRANSISTION:
 			print("REMOVE_TRANSISTION: ", str(item))
 		EditType.REMOVE_CONDITION:
@@ -244,6 +247,12 @@ func _on_add_action_perform_popup_panel_add_perform(
 	item: TreeItem, state_gui: StateGui, function_name: String, argument_names: Array[String]
 ) -> void:
 	root.add_perform_to_state(state_gui, function_name, argument_names)
+	# TODO: file_access.save_file(current_entity, current_path)
+
+func _on_delete_action_popup_panel_delete_action(
+	treeitem: TreeItem
+) -> void:
+	root.delete_action_by_treeitem(treeitem)
 	# TODO: file_access.save_file(current_entity, current_path)
 
 #endregion

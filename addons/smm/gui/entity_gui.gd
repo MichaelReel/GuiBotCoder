@@ -11,6 +11,7 @@ var states_treeitem: TreeItem
 var property_guis: Array[PropertyGui] = []
 var variable_guis: Array[VariableGui] = []
 var state_guis: Array[StateGui] = []
+var action_guis: Array[ActionGui] = []
 
 
 func _init(instruction_gui_: Tree, entity: AIEntity) -> void:
@@ -32,6 +33,7 @@ func update() -> void:
 	property_guis.clear()
 	variable_guis.clear()
 	state_guis.clear()
+	action_guis.clear()
 	
 	# Now re-add everything
 	for property in entity.properties:
@@ -41,7 +43,9 @@ func update() -> void:
 		variable_guis.append(VariableGui.new(self, variable))
 
 	for state in entity.states:
-		state_guis.append(StateGui.new(self, state))
+		var state_gui: StateGui = StateGui.new(self, state)
+		state_guis.append(state_gui)
+		action_guis.append_array(state_gui.action_guis)
 
 #region: Properties
 
@@ -192,7 +196,19 @@ func delete_state_by_treeitem(treeitem: TreeItem) -> void:
 func _add_action_to_state(state_gui: StateGui, new_action: AIAction) -> void:
 	var new_action_gui: ActionGui = ActionGui.get_gui_for_action(state_gui, new_action)
 	state_gui.state.actions.append(new_action)
-	state_gui.actions_guis.append(new_action_gui)
+	state_gui.action_guis.append(new_action_gui)
+	action_guis.append(new_action_gui)
+
+func _find_actiongui_by_treeitem(treeitem: TreeItem) -> ActionGui:
+	# Hopefully there are not too many actions
+	var action_gui: ActionGui = action_guis.filter(
+		func(action_gui: ActionGui): return action_gui.treeitem == treeitem
+	).front()
+	return action_gui
+
+func get_action_name_by_treeitem(treeitem: TreeItem) -> String:
+	var action_gui: ActionGui = _find_actiongui_by_treeitem(treeitem)
+	return action_gui.action_text
 
 func add_assignment_to_state(state_gui: StateGui, variable_name: String, function_name: String, argument_names: Array[String]) -> void:
 	var new_action: AIAction = AIAction.AIAssignment.new(variable_name, function_name, argument_names)
@@ -209,5 +225,14 @@ func add_stop_to_state(state_gui: StateGui) -> void:
 func add_perform_to_state(state_gui: StateGui, function_name: String, argument_names: Array[String]) -> void:
 	var new_action: AIAction = AIAction.AIPerform.new(function_name, argument_names)
 	_add_action_to_state(state_gui, new_action)
+
+func delete_action_by_treeitem(treeitem: TreeItem) -> void:
+	var action_gui: ActionGui = _find_actiongui_by_treeitem(treeitem)
+	var state_gui: StateGui = action_gui.state_gui
+	
+	state_gui.action_treeitem.remove_child(action_gui.treeitem)
+	state_gui.state.actions.erase(action_gui.action)
+	state_gui.action_guis.erase(action_gui)
+	action_guis.erase(action_gui)
 
 #endregion

@@ -4,10 +4,10 @@ extends Object
 var entity_gui: EntityGui
 var state: AIState
 var treeitem: TreeItem
-var actions_treeitem: TreeItem
+var action_treeitem: TreeItem
 var transistions_treeitem: TreeItem
 
-var actions_guis: Array[ActionGui] = []
+var action_guis: Array[ActionGui] = []
 var transistions_guis: Array[TransitionGui] = []
 
 
@@ -16,7 +16,7 @@ func _init(entity_gui: EntityGui, state: AIState) -> void:
 	self.state = state
 	
 	treeitem = entity_gui.treeitem.get_tree().create_item(entity_gui.states_treeitem)
-	actions_treeitem = _setup_actions_section()
+	action_treeitem = _setup_actions_section()
 	transistions_treeitem = _setup_transistions_section()
 	
 	update()
@@ -40,11 +40,11 @@ func update() -> void:
 	)
 	
 	# Until performance is an issue, just recreate all gui
-	actions_guis.clear()
+	action_guis.clear()
 	transistions_guis.clear()
 	
 	for action in state.actions:
-		actions_guis.append(ActionGui.get_gui_for_action(self, action))
+		action_guis.append(ActionGui.get_gui_for_action(self, action))
 	
 	for transition in state.transistions:
 		transistions_guis.append(TransitionGui.new(self, transition))

@@ -4,6 +4,7 @@ extends Object
 var state_gui: StateGui
 var action: AIAction
 var treeitem: TreeItem
+var action_text: String
 
 static func get_gui_for_action(state_gui: StateGui, action: AIAction) -> ActionGui:
 	if action is AIAction.AIAssignment:
@@ -19,59 +20,61 @@ static func get_gui_for_action(state_gui: StateGui, action: AIAction) -> ActionG
 func _init(state_gui: StateGui, action: AIAction) -> void:
 	self.state_gui = state_gui
 	self.action = action
-	treeitem = state_gui.treeitem.get_tree().create_item(state_gui.actions_treeitem)
+	treeitem = state_gui.treeitem.get_tree().create_item(state_gui.action_treeitem)
 	
 	update()
+	treeitem.set_text(Column.TITLE, action_text)
+	treeitem.add_button(
+		Column.REMOVE_BUTTON,
+		state_gui.entity_gui.instruction_gui.minus_button_texture2d,
+		EditType.REMOVE_ACTION,
+		false,
+		"Remove Action"
+	)
 
 func update() -> void:
 	pass
 
-class AssignmentGui extends ActionGui:	
+class AssignmentGui extends ActionGui:
 	func update() -> void:
 		var local_action: AIAction.AIAssignment = action as AIAction.AIAssignment
-		var text: String = "Assign "
-		text += "`" + local_action.assign_variable_name + "` = "
-		text += local_action.function_name
-		text += "("
+		action_text = "Assign "
+		action_text += "`" + local_action.assign_variable_name + "` = "
+		action_text += local_action.function_name
+		action_text += "("
 		var first: bool = true
 		for arg_name in local_action.function_argument_names:
 			if not first:
-				text += ", "
+				action_text += ", "
 			else:
 				first = false
-			text += "`" + arg_name + "`"
-		text += ")"
-		treeitem.set_text(Column.TITLE, text)
+			action_text += "`" + arg_name + "`"
+		action_text += ")"
 
 class TravelGui extends ActionGui:
 	func update() -> void:
 		var local_action: AIAction.AITravel = action as AIAction.AITravel
-		var text: String = "Travel"
-		text += "("
-		text += "`" + local_action.direction_variable_name + "`"
-		text += ", "
-		text += "`" + local_action.distance_variable_name + "`"
-		text += ")"
-		treeitem.set_text(Column.TITLE, text)
+		action_text = "Travel"
+		action_text += "("
+		action_text += "`" + local_action.direction_variable_name + "`"
+		action_text += ", "
+		action_text += "`" + local_action.distance_variable_name + "`"
+		action_text += ")"
 
 class StopGui extends ActionGui:
 	func update() -> void:
-		var text: String = "Stop()"
-		treeitem.set_text(Column.TITLE, text)
+		action_text = "Stop Movement"
 
 class PerformGui extends ActionGui:
 	func update() -> void:
 		var local_action: AIAction.AIPerform = action as AIAction.AIPerform
-		var text: String = local_action.function_name
-		text += "("
+		action_text = local_action.function_name
+		action_text += "("
 		var first: bool = true
 		for arg_name in local_action.function_argument_names:
 			if not first:
-				text += ", "
+				action_text += ", "
 			else:
 				first = false
-			text += "`" + arg_name + "`"
-		text += ")"
-		treeitem.set_text(Column.TITLE, text)
-		
-
+			action_text += "`" + arg_name + "`"
+		action_text += ")"
