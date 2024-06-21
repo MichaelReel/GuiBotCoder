@@ -22,8 +22,30 @@ func _init(state_gui: StateGui, action: AIAction) -> void:
 	self.action = action
 	treeitem = state_gui.treeitem.get_tree().create_item(state_gui.action_treeitem)
 	
+	update_text() 
+	add_edit_button()
+	add_delete_button()
+
+func update_text() -> void:
 	update()
 	treeitem.set_text(Column.TITLE, action_text)
+
+# To be overwritten
+func update() -> void:
+	pass
+
+# Can be overwritten, for example by the stop action which doesn't need edited
+func add_edit_button() -> void:
+	treeitem.add_button(
+		Column.EDIT_BUTTON,
+		state_gui.entity_gui.instruction_gui.modify_button_texture2d,
+		EditType.EDIT_ACTION,
+		false,
+		"Edit Action"
+	)
+
+# Can be overwritten
+func add_delete_button() ->void:
 	treeitem.add_button(
 		Column.REMOVE_BUTTON,
 		state_gui.entity_gui.instruction_gui.minus_button_texture2d,
@@ -31,9 +53,6 @@ func _init(state_gui: StateGui, action: AIAction) -> void:
 		false,
 		"Remove Action"
 	)
-
-func update() -> void:
-	pass
 
 class AssignmentGui extends ActionGui:
 	func update() -> void:
@@ -64,6 +83,9 @@ class TravelGui extends ActionGui:
 class StopGui extends ActionGui:
 	func update() -> void:
 		action_text = "Stop Movement"
+
+	func add_edit_button() -> void:
+		pass
 
 class PerformGui extends ActionGui:
 	func update() -> void:

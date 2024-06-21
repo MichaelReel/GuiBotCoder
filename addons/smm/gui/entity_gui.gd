@@ -210,6 +210,10 @@ func get_action_name_by_treeitem(treeitem: TreeItem) -> String:
 	var action_gui: ActionGui = _find_actiongui_by_treeitem(treeitem)
 	return action_gui.action_text
 
+func get_action_by_treeitem(treeitem: TreeItem) -> ActionGui:
+	var action_gui: ActionGui = _find_actiongui_by_treeitem(treeitem)
+	return action_gui
+
 func add_assignment_to_state(state_gui: StateGui, variable_name: String, function_name: String, argument_names: Array[String]) -> void:
 	var new_action: AIAction = AIAction.AIAssignment.new(variable_name, function_name, argument_names)
 	_add_action_to_state(state_gui, new_action)
@@ -225,6 +229,19 @@ func add_stop_to_state(state_gui: StateGui) -> void:
 func add_perform_to_state(state_gui: StateGui, function_name: String, argument_names: Array[String]) -> void:
 	var new_action: AIAction = AIAction.AIPerform.new(function_name, argument_names)
 	_add_action_to_state(state_gui, new_action)
+
+func edit_assignment_by_treeitem(
+	treeitem: TreeItem,
+	variable_name: String,
+	function_name: String,
+	argument_names: Array[String]
+) -> void:
+	var action_gui: ActionGui.AssignmentGui = _find_actiongui_by_treeitem(treeitem)
+	action_gui.action.assign_variable_name = variable_name
+	action_gui.action.function_name = function_name
+	action_gui.action.function_argument_names = argument_names
+	action_gui.update()
+	action_gui.treeitem.set_text(Column.TITLE, action_gui.action_text)
 
 func delete_action_by_treeitem(treeitem: TreeItem) -> void:
 	var action_gui: ActionGui = _find_actiongui_by_treeitem(treeitem)

@@ -22,6 +22,7 @@ var add_action_perform_popup_panel: PopupPanel
 var edit_property_popup_panel: PopupPanel
 var edit_variable_popup_panel: PopupPanel
 var edit_state_popup_panel: PopupPanel
+var edit_action_assignment_popup_panel: PopupPanel
 var delete_property_popup_panel: PopupPanel
 var delete_variable_popup_panel: PopupPanel
 var delete_state_popup_panel: PopupPanel
@@ -55,6 +56,7 @@ func set_window_signals(window_list: Dictionary) -> void:
 	edit_property_popup_panel = window_list["edit_property_popup_panel"]
 	edit_variable_popup_panel = window_list["edit_variable_popup_panel"]
 	edit_state_popup_panel = window_list["edit_state_popup_panel"]
+	edit_action_assignment_popup_panel = window_list["edit_action_assignment_popup_panel"]
 	delete_property_popup_panel = window_list["delete_property_popup_panel"]
 	delete_variable_popup_panel = window_list["delete_variable_popup_panel"]
 	delete_state_popup_panel = window_list["delete_state_popup_panel"]
@@ -75,6 +77,7 @@ func set_window_signals(window_list: Dictionary) -> void:
 	edit_property_popup_panel.connect("edit_property", self._on_edit_property_popup_panel_edit_property)
 	edit_variable_popup_panel.connect("edit_variable", self._on_edit_variable_popup_panel_edit_variable)
 	edit_state_popup_panel.connect("edit_state", self._on_edit_state_popup_panel_edit_state)
+	edit_action_assignment_popup_panel.connect("edit_action_assignment", self._on_edit_action_assignment_popup_panel_edit_action_assignment)
 	delete_property_popup_panel.connect("delete_property", self._on_delete_property_popup_panel_delete_property)
 	delete_variable_popup_panel.connect("delete_variable", self._on_delete_variable_popup_panel_delete_variable)
 	delete_state_popup_panel.connect("delete_state", self._on_delete_state_popup_panel_delete_state)
@@ -137,7 +140,7 @@ func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_ind
 		EditType.EDIT_STATE:
 			edit_state_popup_panel.show_edit(item, root.get_state_name_by_treeitem(item))
 		EditType.EDIT_ACTION:
-			print("EDIT_ACTION: ", str(item))
+			show_appropriate_action_editing_popup_panel(item)
 		EditType.EDIT_TRANSISTION:
 			print("EDIT_TRANSISTION: ", str(item))
 		EditType.EDIT_CONDITION:
@@ -154,6 +157,23 @@ func _on_button_clicked(item: TreeItem, _column: int, id: int, _mouse_button_ind
 			print("REMOVE_TRANSISTION: ", str(item))
 		EditType.REMOVE_CONDITION:
 			print("REMOVE_CONDITION: ", str(item))
+
+func show_appropriate_action_editing_popup_panel(item: TreeItem) -> void:
+	var action_gui: ActionGui = root.get_action_by_treeitem(item)
+	var state_gui: StateGui = action_gui.state_gui
+	if action_gui is ActionGui.AssignmentGui:
+		_on_edit_action_for_assignment_selected(action_gui as ActionGui.AssignmentGui)
+	if action_gui is ActionGui.TravelGui:
+		_on_edit_action_for_travel_selected(action_gui as ActionGui.TravelGui)
+	if action_gui is ActionGui.PerformGui:
+		_on_edit_action_for_perform_selected(action_gui as ActionGui.PerformGui)
+
+func _compile_argument_list(state_gui: StateGui) -> Array[String]:
+	var argument_list: Array[String] = []
+	argument_list.append_array(root.get_property_names())
+	argument_list.append_array(root.get_variable_names())
+	argument_list.append_array(state_gui.get_assigned_variable_names())
+	return argument_list
 
 #region: Properties
 
@@ -206,53 +226,73 @@ func _on_delete_state_popup_panel_delete_state(treeitem: TreeItem) -> void:
 #region: Actions
 
 func _on_add_action_popup_panel_assign_selected(item: TreeItem, state_gui: StateGui) -> void:
-	var argument_list: Array[String] = []
-	argument_list.append_array(root.get_property_names())
-	argument_list.append_array(root.get_variable_names())
-	argument_list.append_array(state_gui.get_assigned_variable_names())
+	var argument_list: Array[String] = _compile_argument_list(state_gui)
 	add_action_assignment_popup_panel.show_add(item, state_gui, argument_list)
 
 func _on_add_action_popup_panel_travel_selected(item: TreeItem, state_gui: StateGui) -> void:
-	var argument_list: Array[String] = []
-	argument_list.append_array(root.get_property_names())
-	argument_list.append_array(root.get_variable_names())
-	argument_list.append_array(state_gui.get_assigned_variable_names())
+	var argument_list: Array[String] = _compile_argument_list(state_gui)
 	add_action_travel_popup_panel.show_add(item, state_gui, argument_list)
 
 func _on_add_action_popup_panel_perform_selected(item: TreeItem, state_gui: StateGui) -> void:
-	var argument_list: Array[String] = []
-	argument_list.append_array(root.get_property_names())
-	argument_list.append_array(root.get_variable_names())
-	argument_list.append_array(state_gui.get_assigned_variable_names())
+	var argument_list: Array[String] = _compile_argument_list(state_gui)
 	add_action_perform_popup_panel.show_add(item, state_gui, argument_list)
 
 func _on_add_action_popup_panel_stop_selected(item: TreeItem, state_gui: StateGui) -> void:
 	# I don't think we need a popup for "stop"
 	root.add_stop_to_state(state_gui)
-	# TODO: file_access.save_file(current_entity, current_path)
+	file_access.save_file(current_entity, current_path)
 
 func _on_add_action_assignment_popup_panel_add_assignment(
 	item: TreeItem, state_gui: StateGui, variable_name: String, function_name: String, argument_names: Array[String]
 ) -> void:
 	root.add_assignment_to_state(state_gui, variable_name, function_name, argument_names)
-	# TODO: file_access.save_file(current_entity, current_path)
+	file_access.save_file(current_entity, current_path)
 
 func _on_add_action_travel_popup_panel_add_travel(
 	item: TreeItem, state_gui: StateGui, direction_variable_name: String, distance_variable_name: String
 ) -> void:
 	root.add_travel_to_state(state_gui, direction_variable_name, distance_variable_name)
-	# TODO: file_access.save_file(current_entity, current_path)
+	file_access.save_file(current_entity, current_path)
 
 func _on_add_action_perform_popup_panel_add_perform(
 	item: TreeItem, state_gui: StateGui, function_name: String, argument_names: Array[String]
 ) -> void:
 	root.add_perform_to_state(state_gui, function_name, argument_names)
-	# TODO: file_access.save_file(current_entity, current_path)
+	file_access.save_file(current_entity, current_path)
+
+func _on_edit_action_for_assignment_selected(action_gui: ActionGui.AssignmentGui) -> void:
+	print("_on_edit_action_for_assignment_selected")
+	var action: AIAction.AIAssignment = action_gui.action
+	var argument_list: Array[String] = _compile_argument_list(action_gui.state_gui)
+	# Remove the variable we're assigning. Loops don't make sense here.
+	argument_list.erase(action.assign_variable_name)
+	edit_action_assignment_popup_panel.show_edit(
+		action_gui.treeitem,
+		argument_list,
+		action.assign_variable_name,
+		action.function_name,
+		action.function_argument_names,
+	)
+
+func _on_edit_action_for_travel_selected(action_gui: ActionGui.TravelGui) -> void:
+	print("_on_edit_action_for_travel_selected")
+
+func _on_edit_action_for_perform_selected(action_gui: ActionGui.PerformGui) -> void:
+	print("_on_edit_action_for_perform_selected")
+
+func _on_edit_action_assignment_popup_panel_edit_action_assignment(
+	item: TreeItem,
+	variable_name: String,
+	function_name: String,
+	argument_names: Array[String]
+) -> void:
+	root.edit_assignment_by_treeitem(item, variable_name, function_name, argument_names)
+	file_access.save_file(current_entity, current_path)
 
 func _on_delete_action_popup_panel_delete_action(
 	treeitem: TreeItem
 ) -> void:
 	root.delete_action_by_treeitem(treeitem)
-	# TODO: file_access.save_file(current_entity, current_path)
+	file_access.save_file(current_entity, current_path)
 
 #endregion

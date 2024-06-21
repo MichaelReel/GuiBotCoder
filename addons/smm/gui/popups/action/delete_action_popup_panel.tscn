@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://addons/smm/gui/popups/action/delete_action_popup.gd" id="1_7jknm"]
 
 [node name="DeleteActionPopupPanel" type="PopupPanel"]
-title = "Delete Property?"
+title = "Delete Action?"
 position = Vector2i(1085, 648)
 size = Vector2i(320, 80)
 visible = true

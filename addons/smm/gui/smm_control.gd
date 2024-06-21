@@ -15,6 +15,7 @@ extends Control
 	"edit_property_popup_panel": preload("res://addons/smm/gui/popups/property/edit_property_popup_panel.tscn").instantiate(),
 	"edit_variable_popup_panel": preload("res://addons/smm/gui/popups/variable/edit_variable_popup_panel.tscn").instantiate(),
 	"edit_state_popup_panel": preload("res://addons/smm/gui/popups/state/edit_state_popup_panel.tscn").instantiate(),
+	"edit_action_assignment_popup_panel": preload("res://addons/smm/gui/popups/action/edit_action_assignment_popup_panel.tscn").instantiate(),
 	"delete_property_popup_panel": preload("res://addons/smm/gui/popups/property/delete_property_popup_panel.tscn").instantiate(),
 	"delete_variable_popup_panel": preload("res://addons/smm/gui/popups/variable/delete_variable_popup_panel.tscn").instantiate(),
 	"delete_state_popup_panel": preload("res://addons/smm/gui/popups/state/delete_state_popup_panel.tscn").instantiate(),
