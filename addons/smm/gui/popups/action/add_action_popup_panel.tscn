@@ -45,13 +45,9 @@ text = "Perform Action..."
 layout_mode = 2
 size_flags_vertical = 10
 
-[node name="Panel" type="Panel" parent="VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
 [node name="CancelButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 10
 text = "Cancel"
 
 [connection signal="pressed" from="VBoxContainer/HFlowContainer/AssignButton" to="." method="_on_assign_button_pressed"]
